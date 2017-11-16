@@ -49,7 +49,7 @@ ext.junitJupiterVersion  = '5.0.1'
 ext.axonVersion  = '3.0.5'
 
 dependencies {
-	compile "com.github.RamonAranda:KAxon-CQRS:0.0.3"
+	compile "com.github.kotato:KAxon-CQRS:0.0.4"
 	compile "javax.inject:javax.inject:1"
 	compile "org.axonframework:axon-spring-boot-starter:$axonVersion"
 	compile "org.flywaydb:flyway-core"
