@@ -1,11 +1,11 @@
-package context.ecommerce.modules.item.domain
+package context.ecommerce.modules.user.domain
 
 import shared.noarg.NoArgsConstructor
 import java.io.Serializable
 import java.util.UUID
 
 @NoArgsConstructor
-data class ItemId(val id: UUID) : Serializable {
+data class UserId(val id: UUID) : Serializable {
 
     override fun toString(): String {
         return this.id.toString()
@@ -16,8 +16,8 @@ data class ItemId(val id: UUID) : Serializable {
     }
 
     companion object {
-        fun fromString(uuid: String): ItemId {
-            return ItemId(UUID.fromString(uuid))
+        fun fromString(uuid: String): UserId {
+            return UserId(UUID.fromString(uuid))
         }
     }
 
