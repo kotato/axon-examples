@@ -3,12 +3,16 @@ package com.kotato.configuration
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import com.mchange.v2.c3p0.ComboPooledDataSource
+import org.axonframework.common.caching.Cache
+import org.axonframework.common.caching.NoCache
 import org.axonframework.common.jpa.ContainerManagedEntityManagerProvider
 import org.axonframework.common.jpa.EntityManagerProvider
 import org.axonframework.common.transaction.TransactionManager
+import org.axonframework.eventhandling.EventBus
 import org.axonframework.eventhandling.saga.repository.jpa.JpaSagaStore
 import org.axonframework.eventhandling.tokenstore.TokenStore
 import org.axonframework.eventhandling.tokenstore.jpa.JpaTokenStore
+import org.axonframework.eventsourcing.eventstore.EmbeddedEventStore
 import org.axonframework.eventsourcing.eventstore.EventStorageEngine
 import org.axonframework.eventsourcing.eventstore.EventStore
 import org.axonframework.eventsourcing.eventstore.jpa.JpaEventStorageEngine
@@ -116,4 +120,13 @@ open class AxonConfiguration {
 
     @Bean
     open fun serializer(): Serializer = JacksonSerializer(ObjectMapper().registerKotlinModule())
+
+    @Bean
+    open fun eventBus(eventStorageEngine: EventStorageEngine): EventBus = EmbeddedEventStore(eventStorageEngine)
+
+    @Bean
+    open fun cache(): Cache = NoCache.INSTANCE
+
+    @Bean
+    open fun eventStore(eventBus: EventBus): EventStore = eventBus as EventStore
 }

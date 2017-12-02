@@ -50,6 +50,8 @@ ext.junitJupiterVersion  = '5.0.1'
 ext.axonVersion  = '3.0.5'
 
 dependencies {
+	compile "com.fasterxml.jackson.core:jackson-databind:2.8.8"
+	compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.8"
 	compile "com.fasterxml.jackson.module:jackson-module-kotlin:2.8.8"
 	compile "com.github.kotato:KAxon-CQRS:0.0.6"
 	compile "javax.inject:javax.inject:1"
