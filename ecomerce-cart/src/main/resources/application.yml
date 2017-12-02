@@ -1,0 +1,55 @@
+write-model:
+  hibernate:
+    ddl-auto: create
+    show-sql: true
+    c3p0:
+      max-size: 20
+      min-size: 5
+      idle-test-period: 50
+      test-query: SELECT 1
+  datasource:
+    url: jdbc:mysql://localhost:3306/ecommerce_write_model?useSSL=false
+    username: root
+    password:
+    name: "ecommerce-write-model"
+    initial-size: 25
+    max-active: 100
+    max-idle: 50
+    min-idle: 25
+    max-wait: 1000 # 1 second
+    test-while-idle: true
+    validation-query: SELECT 1
+    min-evictable-idle-time-millis: 60000 # 1 minutes
+    time-between-eviction-runs-millis: 5000 # 5 seconds
+    max-age: 216000 #1 hour
+    jmx-enabled: true
+    driver-class-name: com.mysql.jdbc.Driver
+    hibernate.dialect: org.hibernate.dialect.MySQL57InnoDBDialect
+
+read-model:
+  hibernate:
+    ddl-auto: create
+    show-sql: true
+    c3p0:
+      max-size: 20
+      min-size: 5
+      idle-test-period: 50
+      test-query: SELECT 1
+  datasource:
+    url: jdbc:mysql://localhost:3306/ecommerce_read_model?useSSL=false
+    username: root
+    password:
+    name: "ecommerce-read-model"
+    initial-size: 25
+    max-active: 100
+    max-idle: 50
+    min-idle: 25
+    max-wait: 1000 # 1 second
+    test-while-idle: true
+    validation-query: SELECT 1
+    min-evictable-idle-time-millis: 60000 # 1 minutes
+    time-between-eviction-runs-millis: 5000 # 5 seconds
+    max-age: 216000 #1 hour
+    jmx-enabled: true
+    driver-class-name: com.mysql.jdbc.Driver
+    hibernate.dialect: org.hibernate.dialect.MySQL57InnoDBDialect
