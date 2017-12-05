@@ -6,6 +6,7 @@ import org.axonframework.commandhandling.model.AggregateIdentifier
 import org.axonframework.commandhandling.model.AggregateLifecycle
 import org.axonframework.eventsourcing.EventSourcingHandler
 import org.axonframework.spring.stereotype.Aggregate
+import java.time.ZonedDateTime
 
 @Aggregate
 class Cart {
@@ -25,6 +26,7 @@ class Cart {
     companion object {
         fun create(id: CartId, userId: UserId) {
             AggregateLifecycle.apply(CartCreatedEvent(aggregateId = id.asString(),
+                                                      occurredOn = ZonedDateTime.now(),
                                                       userId = userId.asString()))
         }
     }
