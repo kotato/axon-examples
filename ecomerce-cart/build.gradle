@@ -57,7 +57,7 @@ dependencies {
 	compile "javax.inject:javax.inject:1"
 	compile "mysql:mysql-connector-java:6.0.6"
 	compile "org.axonframework:axon-spring-boot-starter:$axonVersion"
-	compile "org.flywaydb:flyway-core"
+//	compile "org.flywaydb:flyway-core"
 	compile "org.hibernate:hibernate-c3p0:5.2.10.Final"
 	compile "org.hibernate:hibernate-java8:5.0.11.Final"
 	compile "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
