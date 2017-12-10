@@ -16,7 +16,6 @@ class AxonEventSimilar<T> private constructor(private val matcher: Matcher<*>) :
                  item[0] is GenericDomainEventMessage<*>) payloads(item).first()
             else item).let { matcher.matches(it) }
 
-
     private fun payloads(item: List<*>): List<DomainEvent> =
             item.map { event -> (event as GenericDomainEventMessage<*>).payload } as List<DomainEvent>
 

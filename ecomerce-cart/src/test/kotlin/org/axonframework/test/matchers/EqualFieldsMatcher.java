@@ -16,6 +16,7 @@
 
 package org.axonframework.test.matchers;
 
+import com.kotato.shared.ZonedDateTimeDeltaMatcher;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 
@@ -33,11 +34,11 @@ import java.util.Objects;
  */
 public class EqualFieldsMatcher<T> extends BaseMatcher<T> {
 
-    private final T expected;
+    private final T           expected;
     private final FieldFilter filter;
-    private Field failedField;
-    private Object failedFieldExpectedValue;
-    private Object failedFieldActualValue;
+    private       Field       failedField;
+    private       Object      failedFieldExpectedValue;
+    private       Object      failedFieldActualValue;
 
     /**
      * Initializes an EqualFieldsMatcher that will match an object with equal properties as the given
@@ -68,8 +69,7 @@ public class EqualFieldsMatcher<T> extends BaseMatcher<T> {
     }
 
     private boolean matchesSafely(Object actual) {
-        return expected.getClass().equals(actual.getClass())
-                && fieldsMatch(expected.getClass(), expected, actual);
+        return expected.getClass().equals(actual.getClass()) && fieldsMatch(expected.getClass(), expected, actual);
     }
 
     private boolean fieldsMatch(Class<?> aClass, Object expectedValue, Object actual) {
@@ -79,11 +79,17 @@ public class EqualFieldsMatcher<T> extends BaseMatcher<T> {
                 field.setAccessible(true);
                 try {
                     Object expectedFieldValue = field.get(expectedValue);
-                    Object actualFieldValue = field.get(actual);
+                    Object actualFieldValue   = field.get(actual);
                     if (expectedFieldValue.getClass().isAssignableFrom(ZonedDateTime.class) &&
-                        actualFieldValue.getClass().isAssignableFrom(ZonedDateTime.class)) {
-                        //TODO: add delta matcher
-                    } else if (!Objects.deepEquals(expectedFieldValue, actualFieldValue)) {
+                        actualFieldValue.getClass().isAssignableFrom(ZonedDateTime.class) &&
+                        !ZonedDateTimeDeltaMatcher.Companion.matches(expectedFieldValue, actualFieldValue)) {
+                        failedField = field;
+                        failedFieldExpectedValue = expectedFieldValue;
+                        failedFieldActualValue = actualFieldValue;
+                        return false;
+                    } else if ((!expectedFieldValue.getClass().isAssignableFrom(ZonedDateTime.class) ||
+                               !actualFieldValue.getClass().isAssignableFrom(ZonedDateTime.class)) &&
+                               !Objects.deepEquals(expectedFieldValue, actualFieldValue)) {
                         failedField = field;
                         failedFieldExpectedValue = expectedFieldValue;
                         failedFieldActualValue = actualFieldValue;
@@ -134,9 +140,7 @@ public class EqualFieldsMatcher<T> extends BaseMatcher<T> {
     public void describeTo(Description description) {
         description.appendText(expected.getClass().getName());
         if (failedField != null) {
-            description.appendText(" (failed on field '")
-                       .appendText(failedField.getName())
-                       .appendText("')");
+            description.appendText(" (failed on field '").appendText(failedField.getName()).appendText("')");
         }
     }
 }
