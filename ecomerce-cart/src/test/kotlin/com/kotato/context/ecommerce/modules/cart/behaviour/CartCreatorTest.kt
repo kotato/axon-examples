@@ -42,7 +42,6 @@ class CartCreatorTest {
         fixture.loadAggregate(command.id)
                 .let { aggregate ->
                     assertEquals(CartId.fromString(command.id), aggregate.id)
-//                    assertEquals(ZonedDateTime.now(), aggregate.id) //TODO: Use delta matcher
                     assertEquals(UserId.fromString(command.userId), aggregate.userId)
                 }
 

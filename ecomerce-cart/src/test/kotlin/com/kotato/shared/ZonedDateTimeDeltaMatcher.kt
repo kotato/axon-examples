@@ -13,7 +13,7 @@ class ZonedDateTimeDeltaMatcher(val expected: ZonedDateTime, val delta: Int = DE
     override fun describeTo(description: Description) {}
 
     companion object {
-        private const val DELTA: Int = 2000
+        private const val DELTA: Int = 2 //SECONDS
 
         fun matches(expected: Any?, actual: Any?): Boolean =
                 ZonedDateTimeDeltaMatcher.matches(expected, actual, DELTA)
