@@ -1,11 +1,12 @@
 package com.kotato.context.ecommerce.modules.user.domain
 
-import com.kotato.shared.noarg.NoArgsConstructor
+import com.kotato.shared.valueobject.ValueObject
 import java.io.Serializable
 import java.util.UUID
+import javax.persistence.Column
 
-@NoArgsConstructor
-data class UserId(val id: UUID) : Serializable {
+@ValueObject
+data class UserId(@Column(columnDefinition = "binary(16)") val id: UUID) : Serializable {
 
     override fun toString(): String {
         return this.id.toString()
