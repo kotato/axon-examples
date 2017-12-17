@@ -8,15 +8,15 @@ import org.springframework.data.jpa.repository.JpaRepository
 import javax.inject.Named
 
 @Named
+@ReadModelTransaction
 open class JpaCartViewRepository(private val persistenceRepository: JpaCartViewPersistenceRepository) : CartViewRepository {
 
-    @ReadModelTransaction
     override fun save(entity: CartView) {
         entity.let(persistenceRepository::saveAndFlush)
     }
 
     override fun search(id: CartId): CartView? = id.let(persistenceRepository::findOne)
 
-}
+    interface JpaCartViewPersistenceRepository : JpaRepository<CartView, CartId>
 
-interface JpaCartViewPersistenceRepository : JpaRepository<CartView, CartId>
+}

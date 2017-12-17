@@ -17,7 +17,8 @@ import javax.sql.DataSource
 
 @Configuration
 @EnableJpaRepositories(basePackages = arrayOf("com.kotato.context"),
-                       entityManagerFactoryRef = "readModelEntityManagerFactory")
+                       entityManagerFactoryRef = "readModelEntityManagerFactory",
+                       considerNestedRepositories = true)
 open class ReadModelConfiguration {
 
     @Bean(name = arrayOf("readModelDataSource"))
