@@ -22,7 +22,3 @@ open class CartViewRepositoryTest : ContextStarterTest() {
     }
 
 }
-
-fun ZonedDateTime.equals(other: Any?): Boolean {
-    return true
-}

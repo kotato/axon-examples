@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus
 class CreateCartControllerTest : ContextStarterTest() {
 
     @Test
-    fun `potato`() {
+    fun `it should create cart`() {
         RestAssured.given()
                 .header("Content-Type", "application/json")
                 .body(objectMapper.writeValueAsString(CreateCartRestRequestStub.random()))
