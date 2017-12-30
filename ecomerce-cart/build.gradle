@@ -1,22 +1,28 @@
 buildscript {
 	ext {
-		kotlinVersion = '1.1.51'
+		kotlinVersion = '1.1.2'
 		springBootVersion = '1.5.8.RELEASE'
 	}
 	repositories {
 		mavenCentral()
 	}
 	dependencies {
+		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}"
 		classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
 		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}"
-		classpath "org.jetbrains.kotlin:kotlin-noarg:$kotlinVersion"
+		classpath "org.jetbrains.kotlin:kotlin-noarg:${kotlinVersion}"
 		classpath "org.junit.platform:junit-platform-gradle-plugin:1.0.1"
+		classpath "mysql:mysql-connector-java:6.0.6"
 	}
 }
 
-apply plugin: 'kotlin'
+apply plugin: "idea"
+apply plugin: "java"
+apply plugin: "kotlin"
+apply plugin: "kotlin-jpa"
 apply plugin: "kotlin-noarg"
-apply plugin: 'org.springframework.boot'
+apply plugin: "org.springframework.boot"
+apply plugin: "org.junit.platform.gradle.plugin"
 
 group = 'com.kotato'
 version = '0.0.1-SNAPSHOT'
@@ -38,7 +44,6 @@ allprojects {
 	repositories {
 		mavenLocal()
 		jcenter()
-		// ADD IT HERE
 		maven { url "https://jitpack.io" }
 	}
 }
@@ -49,26 +54,36 @@ ext.junitJupiterVersion  = '5.0.1'
 ext.axonVersion  = '3.0.5'
 
 dependencies {
-	compile "com.github.kotato:KAxon-CQRS:0.0.4"
+	compile "com.fasterxml.jackson.core:jackson-databind:2.8.8"
+	compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.8"
+	compile "com.fasterxml.jackson.module:jackson-module-kotlin:2.8.8"
+	compile "com.github.kotato:KAxon-CQRS:0.0.6"
 	compile "javax.inject:javax.inject:1"
+	compile "mysql:mysql-connector-java:6.0.6"
 	compile "org.axonframework:axon-spring-boot-starter:$axonVersion"
-	compile "org.flywaydb:flyway-core"
+//	compile "org.flywaydb:flyway-core"
+	compile "org.hibernate:hibernate-c3p0:5.2.10.Final"
+	compile "org.hibernate:hibernate-java8:5.0.11.Final"
 	compile "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
 	compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlinVersion"
 	compile "org.springframework.boot:spring-boot-starter"
 	compile "org.springframework.boot:spring-boot-starter-data-jpa"
+	compile "org.springframework.boot:spring-boot-starter-web"
 
 	testCompile "com.github.javafaker:javafaker:0.12"
 	testCompile "com.github.sbrannen:spring-test-junit5:1.0.0"
+	testCompile "com.nhaarman:mockito-kotlin-kt1.1:1.5.0"
+	testCompile "io.rest-assured:json-schema-validator:3.0.3"
+	testCompile "io.rest-assured:rest-assured:3.0.3"
 	testCompile "org.axonframework:axon-test:$axonVersion"
 	testCompile "org.hamcrest:hamcrest-core:1.3"
 	testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion"
 	testCompile "org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}"
-	testRuntime "org.junit.jupiter:junit-jupiter-engine:${junitJupiterVersion}"
-	testRuntime "org.junit.platform:junit-platform-launcher:${junitPlatformVersion}"
+	testCompile "org.junit.jupiter:junit-jupiter-engine:${junitJupiterVersion}"
+	testCompile "org.junit.platform:junit-platform-launcher:${junitPlatformVersion}"
 	testCompile "org.springframework.boot:spring-boot-starter-test"
 }
 
 noArg{
-	annotation("shared.NoArgsConstructor")
+	annotation("com.kotato.shared.noarg.NoArgsConstructor")
 }
