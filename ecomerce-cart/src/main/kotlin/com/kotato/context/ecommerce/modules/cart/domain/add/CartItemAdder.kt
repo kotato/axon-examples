@@ -10,10 +10,10 @@ import javax.inject.Named
 @Named
 open class CartItemAdder(private val repository: CartRepository) {
 
-    operator fun invoke(id: CartId, cartItem: CartItem) {
+    operator fun invoke(id: CartId, cartItem: CartItem, quantity: Int) {
         id.let(repository::search)
                 .also { guardCartExists(id, it) }!!
-                .addItem(cartItem)
+                .addItem(cartItem, quantity)
     }
 
     private fun guardCartExists(id: CartId, cart: Cart?) {

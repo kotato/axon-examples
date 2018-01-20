@@ -19,7 +19,7 @@ class Cart {
         private set
     lateinit var userId: UserId
         private set
-    var cartItems: CartItems = listOf()
+    var cartItems: CartItems = mapOf()
         private set
 
     @EventSourcingHandler
@@ -31,16 +31,15 @@ class Cart {
     @EventSourcingHandler
     fun on(event: CartItemAddedEvent) {
         CartItem(itemId = ItemId.fromString(event.itemId),
-                 quantity = event.quantity,
                  price = Money.of(event.price, event.currency))
-                .let { this.cartItems = this.cartItems.add(it) }
+                .let { this.cartItems = this.cartItems.add(it, event.quantity) }
     }
     
-    fun addItem(cartItem: CartItem) {
+    fun addItem(cartItem: CartItem, quantity: Int) {
         AggregateLifecycle.apply(CartItemAddedEvent(aggregateId = this.id.asString(),
                                                     occurredOn = ZonedDateTime.now(),
                                                     itemId = cartItem.itemId.asString(),
-                                                    quantity = cartItem.quantity,
+                                                    quantity = quantity,
                                                     price = cartItem.price.numberStripped,
                                                     currency = cartItem.price.currency.currencyCode))
     }
