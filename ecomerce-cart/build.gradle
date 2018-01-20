@@ -65,6 +65,7 @@ dependencies {
 //	compile "org.flywaydb:flyway-core"
 	compile "org.hibernate:hibernate-c3p0:5.2.10.Final"
 	compile "org.hibernate:hibernate-java8:5.0.11.Final"
+	compile "org.javamoney:moneta:1.1"
 	compile "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
 	compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlinVersion"
 	compile "org.springframework.boot:spring-boot-starter"
