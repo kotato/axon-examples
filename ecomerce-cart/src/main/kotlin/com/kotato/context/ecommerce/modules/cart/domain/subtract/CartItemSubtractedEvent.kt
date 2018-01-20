@@ -4,8 +4,8 @@ import com.kotato.shared.domainevent.DomainEvent
 import java.math.BigDecimal
 import java.time.ZonedDateTime
 
-data class CartItemSubtractedEvent(private val aggregateId: String,
-                                   private val occurredOn: ZonedDateTime,
+data class CartItemSubtractedEvent(val aggregateId: String,
+                                   val occurredOn: ZonedDateTime,
                                    val itemId: String,
                                    val quantity: Int,
                                    val price: BigDecimal,

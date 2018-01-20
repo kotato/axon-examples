@@ -1,6 +1,5 @@
 package com.kotato.context.ecommerce.modules.item.domain
 
-import com.kotato.shared.noarg.NoArgsConstructor
 import com.kotato.shared.valueobject.ValueObject
 import java.io.Serializable
 import java.util.UUID

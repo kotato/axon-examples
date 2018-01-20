@@ -7,8 +7,6 @@ import java.util.UUID
 class CreateCartRestRequestStub {
     companion object {
         fun random(cartId: UUID = CartIdStub.random().id,
-                   userId: UUID = UserIdStub.random().id): CreateCartRestRequest {
-            return CreateCartRestRequest(cartId, userId)
-        }
+                   userId: UUID = UserIdStub.random().id) = CreateCartRestRequest(cartId, userId)
     }
 }

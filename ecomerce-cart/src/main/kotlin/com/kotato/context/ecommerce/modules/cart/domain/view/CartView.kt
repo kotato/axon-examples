@@ -6,6 +6,7 @@ import com.kotato.context.ecommerce.modules.user.domain.UserId
 import org.hibernate.annotations.DynamicUpdate
 import java.io.Serializable
 import java.time.ZonedDateTime
+import javax.persistence.ElementCollection
 import javax.persistence.Embedded
 import javax.persistence.EmbeddedId
 import javax.persistence.Entity
@@ -15,4 +16,4 @@ import javax.persistence.Entity
 data class CartView(@EmbeddedId val id: CartId,
                     val createdOn: ZonedDateTime,
                     @Embedded val userId: UserId,
-                    val cartItems: CartItems = emptyMap()) : Serializable
+                    @ElementCollection val cartItems: CartItems = emptyMap()) : Serializable
