@@ -10,10 +10,11 @@ import javax.persistence.ElementCollection
 import javax.persistence.Embedded
 import javax.persistence.EmbeddedId
 import javax.persistence.Entity
+import javax.persistence.FetchType
 
 @Entity
 @DynamicUpdate
 data class CartView(@EmbeddedId val id: CartId,
                     val createdOn: ZonedDateTime,
                     @Embedded val userId: UserId,
-                    @ElementCollection val cartItems: CartItems = emptyMap()) : Serializable
+                    @ElementCollection(fetch = FetchType.EAGER) val cartItems: CartItems = emptyMap()) : Serializable
