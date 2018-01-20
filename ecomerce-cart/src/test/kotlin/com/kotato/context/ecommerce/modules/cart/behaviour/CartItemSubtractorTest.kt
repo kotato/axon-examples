@@ -53,7 +53,7 @@ class CartItemSubtractorTest {
         fixture.loadAggregate(command.id)
                 .let {
                     assertTrue { it.cartItems.size == 1 }
-                    assertTrue { it.cartItems.let { it[it.keys.first()] } == 1 }
+                    assertTrue { it.cartItems.let { it[it.keys.first()] }!!.amount == 1 }
                 }
     }
 

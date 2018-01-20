@@ -67,7 +67,7 @@ class CartItemAdderTest {
         fixture.loadAggregate(command.cartId)
                 .let {
                     assertTrue { it.cartItems.size == 1 }
-                    assertTrue { it.cartItems[it.cartItems.keys.first()] == (command.quantity + givenCommand.quantity) }
+                    assertTrue { it.cartItems[it.cartItems.keys.first()]!!.amount == (command.quantity + givenCommand.quantity) }
                 }
     }
 

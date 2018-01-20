@@ -3,6 +3,7 @@ package com.kotato.context.ecommerce.modules.cart.acceptance
 import com.kotato.assertSimilar.MatcherSimilar.assertSimilar
 import com.kotato.context.ecommerce.modules.cart.adapter.create.CreateCartRestRequest
 import com.kotato.context.ecommerce.modules.cart.adapter.update.CartItemRestRequest
+import com.kotato.context.ecommerce.modules.cart.domain.Amount
 import com.kotato.context.ecommerce.modules.cart.domain.CartId
 import com.kotato.context.ecommerce.modules.cart.domain.CartItem
 import com.kotato.context.ecommerce.modules.cart.domain.view.CartView
@@ -45,7 +46,7 @@ class AddCartItemControllerTest : ContextStarterTest() {
                                   CartView(id = CartId.fromString(createCartRestRequest.id!!.toString()),
                                            createdOn = ZonedDateTime.now(),
                                            userId = UserId.fromString(createCartRestRequest.userId!!.toString()),
-                                           cartItems = mapOf(cartItem to restRequest.quantity!!)))
+                                           cartItems = mapOf(cartItem to Amount(restRequest.quantity!!))))
                 }
     }
 
@@ -67,7 +68,7 @@ class AddCartItemControllerTest : ContextStarterTest() {
                                   CartView(id = CartId.fromString(createCartRestRequest.id!!.toString()),
                                            createdOn = ZonedDateTime.now(),
                                            userId = UserId.fromString(createCartRestRequest.userId!!.toString()),
-                                           cartItems = mapOf(cartItem to restRequest.quantity!! * 2)))
+                                           cartItems = mapOf(cartItem to Amount(restRequest.quantity!! * 2))))
                 }
     }
 
@@ -94,8 +95,8 @@ class AddCartItemControllerTest : ContextStarterTest() {
                                   CartView(id = CartId.fromString(createCartRestRequest.id!!.toString()),
                                            createdOn = ZonedDateTime.now(),
                                            userId = UserId.fromString(createCartRestRequest.userId!!.toString()),
-                                           cartItems = mapOf(cartItem to restRequest.quantity!!,
-                                                             cartItem2 to restRequest2.quantity!!)))
+                                           cartItems = mapOf(cartItem to Amount(restRequest.quantity!!),
+                                                             cartItem2 to Amount(restRequest2.quantity!!))))
                 }
     }
 

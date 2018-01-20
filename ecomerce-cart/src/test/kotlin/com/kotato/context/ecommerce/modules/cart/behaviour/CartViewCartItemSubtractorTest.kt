@@ -1,6 +1,7 @@
 package com.kotato.context.ecommerce.modules.cart.behaviour
 
 import com.github.javafaker.Faker
+import com.kotato.context.ecommerce.modules.cart.domain.Amount
 import com.kotato.context.ecommerce.modules.cart.domain.CartId
 import com.kotato.context.ecommerce.modules.cart.domain.CartItem
 import com.kotato.context.ecommerce.modules.cart.domain.view.CartView
@@ -35,8 +36,8 @@ class CartViewCartItemSubtractorTest {
         val cartItem = CartItem(ItemId.fromString(event.itemId),
                                 Money.of(event.price, event.currency))
         val view = CartViewStub.random(id = CartId.fromString(event.aggregateId()),
-                                       cartItems = mapOf(cartItem to actualAmount))
-        val expected = view.copy(cartItems = mapOf(cartItem to expectedAmount))
+                                       cartItems = mapOf(cartItem to Amount(actualAmount)))
+        val expected = view.copy(cartItems = mapOf(cartItem to Amount(expectedAmount)))
 
         shouldSearchCartView(view.id, view)
         shouldSaveCartView(expected)
@@ -53,7 +54,7 @@ class CartViewCartItemSubtractorTest {
         val cartItem = CartItem(ItemId.fromString(event.itemId),
                                 Money.of(event.price, event.currency))
         val view = CartViewStub.random(id = CartId.fromString(event.aggregateId()),
-                                       cartItems = mapOf(cartItem to amount))
+                                       cartItems = mapOf(cartItem to Amount(amount)))
         val expected = view.copy(cartItems = emptyMap())
 
         shouldSearchCartView(view.id, view)

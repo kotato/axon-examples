@@ -1,5 +1,6 @@
 package com.kotato.context.ecommerce.modules.cart.behaviour
 
+import com.kotato.context.ecommerce.modules.cart.domain.Amount
 import com.kotato.context.ecommerce.modules.cart.domain.CartId
 import com.kotato.context.ecommerce.modules.cart.domain.CartItem
 import com.kotato.context.ecommerce.modules.cart.domain.view.CartView
@@ -30,7 +31,7 @@ class CartViewCartItemAdderTest {
         val view = CartViewStub.random(cartItems = emptyMap())
         val event = CartItemAddedEventStub.random(aggregateId = view.id.asString())
         val expected = view.copy(cartItems = mapOf(CartItem(ItemId.fromString(event.itemId),
-                                                            Money.of(event.price, event.currency)) to event.quantity))
+                                                            Money.of(event.price, event.currency)) to Amount(event.quantity)))
 
         shouldSearchCartView(view.id, view)
         shouldSaveCartView(expected)
@@ -46,8 +47,8 @@ class CartViewCartItemAdderTest {
         val cartItem = CartItem(ItemId.fromString(event.itemId),
                                 Money.of(event.price, event.currency))
         val view = CartViewStub.random(id = CartId.fromString(event.aggregateId()),
-                                       cartItems = mapOf(cartItem to event.quantity))
-        val expected = view.copy(cartItems = mapOf(cartItem to (event.quantity * 2)))
+                                       cartItems = mapOf(cartItem to Amount(event.quantity)))
+        val expected = view.copy(cartItems = mapOf(cartItem to Amount(event.quantity * 2)))
 
         shouldSearchCartView(view.id, view)
         shouldSaveCartView(expected)

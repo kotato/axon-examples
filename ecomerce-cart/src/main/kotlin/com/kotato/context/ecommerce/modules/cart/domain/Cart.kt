@@ -58,7 +58,7 @@ class Cart {
         apply(CartItemSubtractedEvent(aggregateId = this.id.asString(),
                                       occurredOn = ZonedDateTime.now(),
                                       itemId = cartItem.itemId.asString(),
-                                      quantity = if (cartItems[cartItem]!! < quantity) cartItems[cartItem]!! else quantity,
+                                      quantity = if (cartItems[cartItem]!!.amount < quantity) cartItems[cartItem]!!.amount else quantity,
                                       price = cartItem.price.amount,
                                       currency = cartItem.price.currency))
     }

@@ -8,8 +8,8 @@ import java.math.BigDecimal
 data class Money private constructor(var amount: BigDecimal, var currency: String) {
 
     companion object {
-        fun of(amount: BigDecimal, currency: String) = Money(amount, currency)
-        fun eur(amount: BigDecimal) = Money(amount, "EUR")
+        fun of(amount: BigDecimal, currency: String) = Money(amount.setScale(2, BigDecimal.ROUND_HALF_EVEN), currency)
+        fun eur(amount: BigDecimal) = Money.of(amount, "EUR")
     }
 
 }
