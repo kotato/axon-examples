@@ -30,41 +30,41 @@ class CartItemAdderTest {
     @Test
     fun `it should add a cart item`() {
         val command = AddCartItemCommandStub.random()
-        val expected = CartItemAddedEvent(command.id,
+        val expected = CartItemAddedEvent(command.cartId,
                                           ZonedDateTime.now(),
                                           command.itemId,
                                           command.quantity,
                                           command.price,
                                           command.currency)
-        fixture.given(CartCreatedEventStub.random(aggregateId = command.id))
+        fixture.given(CartCreatedEventStub.random(aggregateId = command.cartId))
                 .`when`(command)
                 .expectSuccessfulHandlerExecution()
                 .expectDomainEvent(expected)
 
-        fixture.loadAggregate(command.id)
+        fixture.loadAggregate(command.cartId)
                 .let { assertTrue { it.cartItems.size == 1 } }
     }
 
     @Test
     fun `it should add a cart item on already existing item on cart`() {
         val command = AddCartItemCommandStub.random()
-        val givenCommand = AddCartItemCommandStub.random(id = command.id,
+        val givenCommand = AddCartItemCommandStub.random(id = command.cartId,
                                                          itemId = command.itemId,
                                                          currency = command.currency,
                                                          price = command.price)
-        val expected = CartItemAddedEvent(command.id,
+        val expected = CartItemAddedEvent(command.cartId,
                                           ZonedDateTime.now(),
                                           command.itemId,
                                           command.quantity,
                                           command.price,
                                           command.currency)
-        fixture.given(CartCreatedEventStub.random(aggregateId = command.id))
+        fixture.given(CartCreatedEventStub.random(aggregateId = command.cartId))
                 .andGivenCommands(givenCommand)
                 .`when`(command)
                 .expectSuccessfulHandlerExecution()
                 .expectDomainEvent(expected)
 
-        fixture.loadAggregate(command.id)
+        fixture.loadAggregate(command.cartId)
                 .let {
                     assertTrue { it.cartItems.size == 1 }
                     assertTrue { it.cartItems[it.cartItems.keys.first()] == (command.quantity + givenCommand.quantity) }
@@ -74,22 +74,22 @@ class CartItemAdderTest {
     @Test
     fun `it should add a cart item on already existing item on cart with different price`() {
         val command = AddCartItemCommandStub.random()
-        val givenCommand = AddCartItemCommandStub.random(id = command.id,
+        val givenCommand = AddCartItemCommandStub.random(id = command.cartId,
                                                          itemId = command.itemId,
                                                          currency = command.currency)
-        val expected = CartItemAddedEvent(command.id,
+        val expected = CartItemAddedEvent(command.cartId,
                                           ZonedDateTime.now(),
                                           command.itemId,
                                           command.quantity,
                                           command.price,
                                           command.currency)
-        fixture.given(CartCreatedEventStub.random(aggregateId = command.id))
+        fixture.given(CartCreatedEventStub.random(aggregateId = command.cartId))
                 .andGivenCommands(givenCommand)
                 .`when`(command)
                 .expectSuccessfulHandlerExecution()
                 .expectDomainEvent(expected)
 
-        fixture.loadAggregate(command.id)
+        fixture.loadAggregate(command.cartId)
                 .let {
                     assertTrue { it.cartItems.size == 2 }
                 }
