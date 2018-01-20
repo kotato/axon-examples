@@ -11,12 +11,12 @@ import com.kotato.context.ecommerce.modules.cart.domain.view.subtract.SubtractCa
 import com.kotato.context.ecommerce.modules.cart.stub.CartItemSubtractedEventStub
 import com.kotato.context.ecommerce.modules.cart.stub.CartViewStub
 import com.kotato.context.ecommerce.modules.item.domain.ItemId
+import com.kotato.shared.money.Money
 import com.nhaarman.mockito_kotlin.doNothing
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
-import org.javamoney.moneta.Money
 import org.junit.jupiter.api.Test
 import kotlin.test.assertFailsWith
 

@@ -2,10 +2,9 @@ package com.kotato.context.ecommerce.modules.cart.domain.subtract
 
 import com.kotato.context.ecommerce.modules.cart.domain.CartId
 import com.kotato.context.ecommerce.modules.cart.domain.CartItem
-import com.kotato.context.ecommerce.modules.cart.domain.add.AddCartItemCommand
 import com.kotato.context.ecommerce.modules.item.domain.ItemId
 import com.kotato.cqrs.domain.command.CommandHandler
-import org.javamoney.moneta.Money
+import com.kotato.shared.money.Money
 import javax.inject.Named
 
 @Named

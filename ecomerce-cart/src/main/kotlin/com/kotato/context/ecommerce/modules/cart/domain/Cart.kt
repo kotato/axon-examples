@@ -6,11 +6,11 @@ import com.kotato.context.ecommerce.modules.cart.domain.subtract.CartItemIsNotIn
 import com.kotato.context.ecommerce.modules.cart.domain.subtract.CartItemSubtractedEvent
 import com.kotato.context.ecommerce.modules.item.domain.ItemId
 import com.kotato.context.ecommerce.modules.user.domain.UserId
+import com.kotato.shared.money.Money
 import org.axonframework.commandhandling.model.AggregateIdentifier
 import org.axonframework.commandhandling.model.AggregateLifecycle.apply
 import org.axonframework.eventsourcing.EventSourcingHandler
 import org.axonframework.spring.stereotype.Aggregate
-import org.javamoney.moneta.Money
 import java.time.ZonedDateTime
 
 @Aggregate
@@ -49,8 +49,8 @@ class Cart {
                                  occurredOn = ZonedDateTime.now(),
                                  itemId = cartItem.itemId.asString(),
                                  quantity = quantity,
-                                 price = cartItem.price.numberStripped,
-                                 currency = cartItem.price.currency.currencyCode))
+                                 price = cartItem.price.amount,
+                                 currency = cartItem.price.currency))
     }
 
     fun subtractItem(cartItem: CartItem, quantity: Int) {
@@ -59,8 +59,8 @@ class Cart {
                                       occurredOn = ZonedDateTime.now(),
                                       itemId = cartItem.itemId.asString(),
                                       quantity = if (cartItems[cartItem]!! < quantity) cartItems[cartItem]!! else quantity,
-                                      price = cartItem.price.numberStripped,
-                                      currency = cartItem.price.currency.currencyCode))
+                                      price = cartItem.price.amount,
+                                      currency = cartItem.price.currency))
     }
 
     private fun guardItemExistsInCart(cartItem: CartItem) {

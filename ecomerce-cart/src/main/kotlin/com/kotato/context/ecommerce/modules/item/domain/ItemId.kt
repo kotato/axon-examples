@@ -6,7 +6,7 @@ import java.util.UUID
 import javax.persistence.Column
 
 @ValueObject
-data class ItemId(@Column(columnDefinition = "binary(16)") val id: UUID) : Serializable {
+data class ItemId(@Column(columnDefinition = "binary(16)") var id: UUID) : Serializable {
 
     override fun toString(): String {
         return this.id.toString()

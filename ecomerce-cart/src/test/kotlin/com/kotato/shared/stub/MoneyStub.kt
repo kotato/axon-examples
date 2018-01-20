@@ -1,6 +1,6 @@
 package com.kotato.shared.stub
 
-import org.javamoney.moneta.Money
+import com.kotato.shared.money.Money
 import java.math.BigDecimal
 
 class MoneyStub {
