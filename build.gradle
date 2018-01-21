@@ -7,32 +7,24 @@ buildscript {
 		mavenCentral()
 	}
 	dependencies {
-		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}"
 		classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
-		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}"
-		classpath "org.jetbrains.kotlin:kotlin-noarg:${kotlinVersion}"
-		classpath "org.junit.platform:junit-platform-gradle-plugin:1.0.1"
-		classpath "mysql:mysql-connector-java:6.0.6"
 	}
 }
 
 apply plugin: "idea"
 apply plugin: "java"
-apply plugin: "kotlin"
-apply plugin: "kotlin-jpa"
-apply plugin: "kotlin-noarg"
 apply plugin: "org.springframework.boot"
-apply plugin: "org.junit.platform.gradle.plugin"
 
 group = 'com.kotato'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
 
-compileKotlin {
-	kotlinOptions.jvmTarget = "1.8"
+bootRepackage {
+	enabled = false
 }
-compileTestKotlin {
-	kotlinOptions.jvmTarget = "1.8"
+
+springBoot {
+	mainClass = "com.kotato.EcommerceApplication"
 }
 
 repositories {
@@ -40,13 +32,6 @@ repositories {
 	maven { url 'https://jitpack.io' }
 }
 
-bootRepackage {
-	enabled = false
-}
-
 dependencies {
-//	compile('org.springframework.boot:spring-boot-starter-data-jpa')
-//	compile("org.jetbrains.kotlin:kotlin-stdlib-jre8:${kotlinVersion}")
-//	compile("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
-//	testCompile('org.springframework.boot:spring-boot-starter-test')
+	compile project(path: "ecomerce-cart")
 }
