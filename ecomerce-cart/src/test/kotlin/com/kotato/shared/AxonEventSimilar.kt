@@ -1,5 +1,6 @@
 package com.kotato.shared
 
+import com.kotato.assertSimilar.Similar
 import org.axonframework.eventsourcing.GenericDomainEventMessage
 import org.axonframework.test.matchers.EqualFieldsMatcher
 import org.hamcrest.BaseMatcher
@@ -26,7 +27,7 @@ class AxonEventSimilar<T> private constructor(private val matcher: Matcher<*>) :
     companion object {
         @Factory
         internal fun <T> axonSimilar(target: T): Matcher<out Matcher<*>> {
-            return AxonEventSimilar(EqualFieldsMatcher(target))
+            return AxonEventSimilar(Similar.similar(target))
         }
     }
 }

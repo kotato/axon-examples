@@ -14,7 +14,7 @@ import io.restassured.parsing.Parser
 
 class RestAssuredTest {
     companion object Config {
-        fun config(serverPort: Int, objectMapper: ObjectMapper): Unit {
+        fun config(serverPort: Int, objectMapper: ObjectMapper) {
             RestAssured.port = serverPort
             RestAssured.defaultParser = Parser.JSON
             RestAssured.config = RestAssuredConfig.config()

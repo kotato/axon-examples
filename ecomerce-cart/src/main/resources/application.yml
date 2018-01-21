@@ -3,6 +3,9 @@ spring:
     property-naming-strategy: SNAKE_CASE
     date-format: com.fasterxml.jackson.databind.util.ISO8601DateFormat
 
+security.basic.enabled: false
+management.security.enabled: false
+
 write-model:
   hibernate:
     ddl-auto: create
