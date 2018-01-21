@@ -17,6 +17,13 @@ cache:
 
 before_install:
   - jdk_switcher use oraclejdk8
+  - ./travis/install_mysql_5.7.sh
+    - mysql -e 'CREATE DATABASE ecommerce_read_model;'
+    - mysql -e 'CREATE DATABASE ecommerce_write_model;'
+    - sudo service mysql restart
 
 script:
   - ./gradlew check
+
+services:
+  - mysql
