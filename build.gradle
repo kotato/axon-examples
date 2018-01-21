@@ -27,6 +27,7 @@ apply plugin: "org.junit.platform.gradle.plugin"
 group = 'com.kotato'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
+
 compileKotlin {
 	kotlinOptions.jvmTarget = "1.8"
 }
@@ -37,6 +38,10 @@ compileTestKotlin {
 repositories {
 	mavenCentral()
 	maven { url 'https://jitpack.io' }
+}
+
+bootRepackage {
+	enabled = false
 }
 
 dependencies {
