@@ -23,3 +23,6 @@ hs_err_pid*
 
 # Exclude gradlew
 !gradle-wrapper.jar
+
+#Exclude iml files
+*.iml
