@@ -22,4 +22,5 @@ data class CartView(@EmbeddedId val id: CartId,
                     @ElementCollection(fetch = FetchType.EAGER)
                     @AttributeOverride(name = "key.itemId.id",
                                        column = Column(columnDefinition = "binary(16)"))
-                    val cartItems: CartItems = emptyMap()) : Serializable
+                    val cartItems: CartItems = emptyMap(),
+                    val checkout: Boolean = true) : Serializable
