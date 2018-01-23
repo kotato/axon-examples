@@ -1,6 +1,9 @@
 package com.kotato.context.ecommerce.modules.cart.domain
 
 import com.kotato.context.ecommerce.modules.cart.domain.add.CartItemAddedEvent
+import com.kotato.context.ecommerce.modules.cart.domain.checkout.CartCheckedOutEvent
+import com.kotato.context.ecommerce.modules.cart.domain.checkout.CartIsCheckoutException
+import com.kotato.context.ecommerce.modules.cart.domain.checkout.CartIsEmptyException
 import com.kotato.context.ecommerce.modules.cart.domain.create.CartCreatedEvent
 import com.kotato.context.ecommerce.modules.cart.domain.subtract.CartItemIsNotInCartException
 import com.kotato.context.ecommerce.modules.cart.domain.subtract.CartItemSubtractedEvent
@@ -23,29 +26,37 @@ class Cart {
         private set
     var cartItems: CartItems = mapOf()
         private set
+    var checkout = false
+        private set
+
 
     @EventSourcingHandler
     fun on(event: CartCreatedEvent) {
-        this.id = event.aggregateId().let { CartId.fromString(it) }
-        this.userId = event.userId.let { UserId.fromString(it) }
+        id = event.aggregateId().let { CartId.fromString(it) }
+        userId = event.userId.let { UserId.fromString(it) }
     }
 
     @EventSourcingHandler
     fun on(event: CartItemAddedEvent) {
         CartItem(itemId = ItemId.fromString(event.itemId),
                  price = Money.of(event.price, event.currency))
-                .let { this.cartItems = this.cartItems.add(it, event.quantity) }
+                .let { cartItems = cartItems.add(it, event.quantity) }
     }
 
     @EventSourcingHandler
     fun on(event: CartItemSubtractedEvent) {
         CartItem(itemId = ItemId.fromString(event.itemId),
                  price = Money.of(event.price, event.currency))
-                .let { this.cartItems = this.cartItems.subtract(it, event.quantity) }
+                .let { cartItems = cartItems.subtract(it, event.quantity) }
+    }
+
+    @EventSourcingHandler
+    fun on(event: CartCheckedOutEvent) {
+        checkout = true
     }
 
     fun addItem(cartItem: CartItem, quantity: Int) {
-        apply(CartItemAddedEvent(aggregateId = this.id.asString(),
+        apply(CartItemAddedEvent(aggregateId = id.asString(),
                                  occurredOn = ZonedDateTime.now(),
                                  itemId = cartItem.itemId.asString(),
                                  quantity = quantity,
@@ -55,12 +66,27 @@ class Cart {
 
     fun subtractItem(cartItem: CartItem, quantity: Int) {
         guardItemExistsInCart(cartItem)
-        apply(CartItemSubtractedEvent(aggregateId = this.id.asString(),
+        apply(CartItemSubtractedEvent(aggregateId = id.asString(),
                                       occurredOn = ZonedDateTime.now(),
                                       itemId = cartItem.itemId.asString(),
                                       quantity = if (cartItems[cartItem]!!.amount < quantity) cartItems[cartItem]!!.amount else quantity,
                                       price = cartItem.price.amount,
                                       currency = cartItem.price.currency))
+    }
+
+    fun checkout() {
+        guardThereAreItems()
+        guardCartIsNotCheckout()
+        apply(CartCheckedOutEvent(aggregateId = id.asString(),
+                                  occurredOn = ZonedDateTime.now()))
+    }
+
+    private fun guardThereAreItems() {
+        if (cartItems.isEmpty()) throw CartIsEmptyException()
+    }
+
+    private fun guardCartIsNotCheckout() {
+        if (checkout) throw CartIsCheckoutException()
     }
 
     private fun guardItemExistsInCart(cartItem: CartItem) {
@@ -73,5 +99,6 @@ class Cart {
                                    occurredOn = ZonedDateTime.now(),
                                    userId = userId.asString()))
         }
+
     }
 }

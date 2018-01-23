@@ -4,7 +4,6 @@ import com.github.javafaker.Faker
 import com.kotato.context.ecommerce.modules.cart.adapter.update.CartItemRestRequest
 import com.kotato.shared.stub.BigDecimalStub
 import java.math.BigDecimal
-import java.util.Currency
 import java.util.UUID
 
 class SubtractCartItemRestRequestStub {

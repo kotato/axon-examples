@@ -6,8 +6,6 @@ import com.kotato.context.ecommerce.modules.user.stub.UserIdStub
 class CreateCartCommandStub {
     companion object {
         fun random(id: String = CartIdStub.random().asString(),
-                   userId: String = UserIdStub.random().asString()): CreateCartCommand {
-            return CreateCartCommand(id, userId)
-        }
+                   userId: String = UserIdStub.random().asString()) = CreateCartCommand(id, userId)
     }
 }

@@ -5,6 +5,6 @@ import java.util.UUID
 
 class CartIdStub {
     companion object {
-        fun random(): CartId = UUID.randomUUID().let { CartId(it) }
+        fun random() = UUID.randomUUID().let { CartId(it) }
     }
 }

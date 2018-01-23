@@ -8,8 +8,7 @@ class CartCreatedEventStub {
     companion object {
         fun random(aggregateId: String = CartIdStub.random().asString(),
                    occurredOn: ZonedDateTime = ZonedDateTime.now(),
-                   userId: String = UserIdStub.random().asString()): CartCreatedEvent {
-            return CartCreatedEvent(aggregateId, occurredOn, userId)
-        }
+                   userId: String = UserIdStub.random().asString()) =
+                CartCreatedEvent(aggregateId, occurredOn, userId)
     }
 }
