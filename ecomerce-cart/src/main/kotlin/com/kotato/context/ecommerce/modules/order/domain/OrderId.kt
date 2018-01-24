@@ -1,4 +1,4 @@
-package com.kotato.context.ecommerce.modules.cart.domain
+package com.kotato.context.ecommerce.modules.order.domain
 
 import com.kotato.shared.valueobject.ValueObject
 import java.io.Serializable
@@ -6,14 +6,14 @@ import java.util.UUID
 import javax.persistence.Column
 
 @ValueObject
-data class CartId(@Column(columnDefinition = "binary(16)") val id: UUID) : Serializable {
+data class OrderId(@Column(columnDefinition = "binary(16)") val id: UUID) : Serializable {
 
     override fun toString() = this.id.toString()
 
     fun asString() = this.id.toString()
 
     companion object {
-        fun fromString(uuid: String) = CartId(UUID.fromString(uuid))
+        fun fromString(uuid: String) = OrderId(UUID.fromString(uuid))
     }
 
 }
