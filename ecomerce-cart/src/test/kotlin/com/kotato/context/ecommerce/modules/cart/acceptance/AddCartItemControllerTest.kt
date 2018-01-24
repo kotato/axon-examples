@@ -32,12 +32,12 @@ class AddCartItemControllerTest : ContextStarterTest() {
     fun `it should add item to cart`() {
         val cartId = CartIdStub.random()
         val createCartRestRequest = CreateCartRestRequestStub.random(cartId = cartId.id)
-        createCart(createCartRestRequest)
+        cartFlow.createCart(createCartRestRequest)
 
-        val restRequest = AddCartItemRestRequestStub.random(cartId = cartId.id)
-        patch(restRequest)
+        val restRequest = AddCartItemRestRequestStub.random()
+        cartFlow.addItem(restRequest, cartId)
 
-        wrapper.wrap { repository.search(CartId.fromString(restRequest.cartId!!.toString())) }
+        wrapper.wrap { repository.search(cartId) }
                 .let {
                     assertNotNull(it)
                     val cartItem = CartItem(ItemId.fromString(restRequest.itemId!!.toString()),
@@ -54,12 +54,12 @@ class AddCartItemControllerTest : ContextStarterTest() {
     fun `it should add a cart item on already existing item on cart`() {
         val cartId = CartIdStub.random()
         val createCartRestRequest = CreateCartRestRequestStub.random(cartId = cartId.id)
-        createCart(createCartRestRequest)
+        cartFlow.createCart(createCartRestRequest)
 
-        val restRequest = AddCartItemRestRequestStub.random(cartId = cartId.id)
-        (0..1).forEach { patch(restRequest) }
+        val restRequest = AddCartItemRestRequestStub.random()
+        (0..1).forEach { cartFlow.addItem(restRequest, cartId) }
 
-        wrapper.wrap { repository.search(CartId.fromString(restRequest.cartId!!.toString())) }
+        wrapper.wrap { repository.search(cartId) }
                 .let {
                     assertNotNull(it)
                     val cartItem = CartItem(ItemId.fromString(restRequest.itemId!!.toString()),
@@ -76,15 +76,15 @@ class AddCartItemControllerTest : ContextStarterTest() {
     fun `it should add a cart item on already existing item on cart with different price`() {
         val cartId = CartIdStub.random()
         val createCartRestRequest = CreateCartRestRequestStub.random(cartId = cartId.id)
-        createCart(createCartRestRequest)
+        cartFlow.createCart(createCartRestRequest)
 
-        val restRequest = AddCartItemRestRequestStub.random(cartId = cartId.id)
-        patch(restRequest)
+        val restRequest = AddCartItemRestRequestStub.random()
+        cartFlow.addItem(restRequest, cartId)
 
-        val restRequest2 = AddCartItemRestRequestStub.random(cartId = cartId.id)
-        patch(restRequest2)
+        val restRequest2 = AddCartItemRestRequestStub.random()
+        cartFlow.addItem(restRequest2, cartId)
 
-        wrapper.wrap { repository.search(CartId.fromString(restRequest.cartId!!.toString())) }
+        wrapper.wrap { repository.search(cartId) }
                 .let {
                     assertNotNull(it)
                     val cartItem = CartItem(ItemId.fromString(restRequest.itemId!!.toString()),
@@ -106,28 +106,9 @@ class AddCartItemControllerTest : ContextStarterTest() {
                 .header("Content-Type", "application/json")
                 .body(objectMapper.writeValueAsString(AddCartItemRestRequestStub.random()))
                 .`when`()
-                .patch("/ecommerce/cart/main")
+                .patch("/ecommerce/cart/${CartIdStub.random()}")
                 .then()
                 .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
     }
 
-    private fun patch(restRequest: CartItemRestRequest) {
-        RestAssured.given()
-                .header("Content-Type", "application/json")
-                .body(objectMapper.writeValueAsString(restRequest))
-                .`when`()
-                .patch("/ecommerce/cart/main")
-                .then()
-                .statusCode(HttpStatus.NO_CONTENT.value())
-    }
-
-    private fun createCart(restRequest: CreateCartRestRequest) {
-        RestAssured.given()
-                .header("Content-Type", "application/json")
-                .body(objectMapper.writeValueAsString(restRequest))
-                .`when`()
-                .post("/ecommerce/cart")
-                .then()
-                .statusCode(HttpStatus.CREATED.value())
-    }
 }

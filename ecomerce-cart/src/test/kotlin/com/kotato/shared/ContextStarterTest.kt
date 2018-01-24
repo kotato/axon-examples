@@ -3,6 +3,7 @@ package com.kotato.shared
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.PropertyNamingStrategy
 import com.kotato.EcommerceApplication
+import com.kotato.context.ecommerce.modules.cart.CartFlow
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.boot.context.embedded.LocalServerPort
@@ -20,6 +21,7 @@ open class ContextStarterTest {
     private val serverPort: Int = 0
 
     protected val objectMapper = ObjectMapper().setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE)
+    protected val cartFlow = CartFlow(objectMapper)
 
     @BeforeEach
     fun setUp() {

@@ -5,6 +5,7 @@ import com.kotato.context.ecommerce.modules.cart.domain.subtract.SubtractCartIte
 import com.kotato.cqrs.domain.command.CommandBus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PatchMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 import javax.inject.Inject
@@ -13,16 +14,17 @@ import javax.validation.Valid
 @RestController
 open class CartItemController(@Inject val commandBus: CommandBus) {
 
-    @PatchMapping("/ecommerce/cart/main")
-    open fun potato(@RequestBody @Valid request: CartItemRestRequest): ResponseEntity<Unit> {
+    @PatchMapping("/ecommerce/cart/{cartId}")
+    open fun update(@PathVariable("cartId") cartId: String,
+                    @RequestBody @Valid request: CartItemRestRequest): ResponseEntity<Unit> {
         if (request.quantity!! < 0) {
-            commandBus.handle(SubtractCartItemCommand(request.cartId!!.toString(),
+            commandBus.handle(SubtractCartItemCommand(cartId,
                                                       request.itemId!!.toString(),
                                                       Math.abs(request.quantity),
                                                       request.price!!,
                                                       request.currency!!))
         } else if (request.quantity > 0) {
-            commandBus.handle(AddCartItemCommand(request.cartId!!.toString(),
+            commandBus.handle(AddCartItemCommand(cartId,
                                                  request.itemId!!.toString(),
                                                  request.quantity,
                                                  request.price!!,

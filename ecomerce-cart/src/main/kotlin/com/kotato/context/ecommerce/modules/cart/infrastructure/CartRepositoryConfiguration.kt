@@ -15,14 +15,14 @@ import org.springframework.context.annotation.Configuration
 open class CartRepositoryConfiguration {
 
     @Bean
-    open fun addressAggregateFactory(): AggregateFactory<Cart> =
+    open fun cartAggregateFactory(): AggregateFactory<Cart> =
             SpringPrototypeAggregateFactory<Cart>().also {
                 it.setPrototypeBeanName(Cart::class.simpleName!!.toLowerCase())
             }
 
     @Bean
-    open fun addressRepository(snapshotter: Snapshotter,
-                               eventStore: EventStore,
-                               cache: Cache): Repository<Cart> =
-            CachingEventSourcingRepository(addressAggregateFactory(), eventStore, cache)
+    open fun cartRepository(snapshotter: Snapshotter,
+                            eventStore: EventStore,
+                            cache: Cache): Repository<Cart> =
+            CachingEventSourcingRepository(cartAggregateFactory(), eventStore, cache)
 }

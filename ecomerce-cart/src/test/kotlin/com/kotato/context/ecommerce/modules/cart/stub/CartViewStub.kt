@@ -12,8 +12,8 @@ class CartViewStub {
         fun random(id: CartId = CartIdStub.random(),
                    occurredOn: ZonedDateTime = ZonedDateTime.now(),
                    userId: UserId = UserIdStub.random(),
-                   cartItems: CartItems = CartItemsStub.random()): CartView {
-            return CartView(id, occurredOn, userId, cartItems)
-        }
+                   cartItems: CartItems = CartItemsStub.random(),
+                   checkout: Boolean = false) =
+                CartView(id, occurredOn, userId, cartItems, checkout)
     }
 }

@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository
 import javax.inject.Named
 
 @Named
-@ReadModelTransaction
 open class JpaCartViewRepository(private val persistenceRepository: JpaCartViewPersistenceRepository) : CartViewRepository {
 
     override fun save(entity: CartView) {
