@@ -11,11 +11,13 @@ class Order {
     @AggregateIdentifier
     lateinit var orderId: OrderId
         private set
+    lateinit var cartId: PaymentId
+        private set
     lateinit var paymentId: PaymentId
         private set
     lateinit var cartItems: CartItems
         private set
     lateinit var orderStatus: OrderStatus
         private set
-    
+
 }
