@@ -15,9 +15,8 @@ import javax.validation.Valid
 open class CartItemController(@Inject val commandBus: CommandBus) {
 
     @PatchMapping("/ecommerce/cart/{cartId}")
-    open fun potato(
-            @PathVariable("cartId") cartId: String,
-            @RequestBody @Valid request: CartItemRestRequest): ResponseEntity<Unit> {
+    open fun update(@PathVariable("cartId") cartId: String,
+                    @RequestBody @Valid request: CartItemRestRequest): ResponseEntity<Unit> {
         if (request.quantity!! < 0) {
             commandBus.handle(SubtractCartItemCommand(cartId,
                                                       request.itemId!!.toString(),

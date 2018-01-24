@@ -32,10 +32,10 @@ class AddCartItemControllerTest : ContextStarterTest() {
     fun `it should add item to cart`() {
         val cartId = CartIdStub.random()
         val createCartRestRequest = CreateCartRestRequestStub.random(cartId = cartId.id)
-        createCart(createCartRestRequest)
+        cartFlow.createCart(createCartRestRequest)
 
         val restRequest = AddCartItemRestRequestStub.random()
-        patch(restRequest, cartId.asString())
+        cartFlow.addItem(restRequest, cartId)
 
         wrapper.wrap { repository.search(cartId) }
                 .let {
@@ -54,10 +54,10 @@ class AddCartItemControllerTest : ContextStarterTest() {
     fun `it should add a cart item on already existing item on cart`() {
         val cartId = CartIdStub.random()
         val createCartRestRequest = CreateCartRestRequestStub.random(cartId = cartId.id)
-        createCart(createCartRestRequest)
+        cartFlow.createCart(createCartRestRequest)
 
         val restRequest = AddCartItemRestRequestStub.random()
-        (0..1).forEach { patch(restRequest, cartId.asString()) }
+        (0..1).forEach { cartFlow.addItem(restRequest, cartId) }
 
         wrapper.wrap { repository.search(cartId) }
                 .let {
@@ -76,13 +76,13 @@ class AddCartItemControllerTest : ContextStarterTest() {
     fun `it should add a cart item on already existing item on cart with different price`() {
         val cartId = CartIdStub.random()
         val createCartRestRequest = CreateCartRestRequestStub.random(cartId = cartId.id)
-        createCart(createCartRestRequest)
+        cartFlow.createCart(createCartRestRequest)
 
         val restRequest = AddCartItemRestRequestStub.random()
-        patch(restRequest, cartId.asString())
+        cartFlow.addItem(restRequest, cartId)
 
         val restRequest2 = AddCartItemRestRequestStub.random()
-        patch(restRequest2, cartId.asString())
+        cartFlow.addItem(restRequest2, cartId)
 
         wrapper.wrap { repository.search(cartId) }
                 .let {
@@ -111,23 +111,4 @@ class AddCartItemControllerTest : ContextStarterTest() {
                 .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
     }
 
-    private fun patch(restRequest: CartItemRestRequest, id: String) {
-        RestAssured.given()
-                .header("Content-Type", "application/json")
-                .body(objectMapper.writeValueAsString(restRequest))
-                .`when`()
-                .patch("/ecommerce/cart/$id")
-                .then()
-                .statusCode(HttpStatus.NO_CONTENT.value())
-    }
-
-    private fun createCart(restRequest: CreateCartRestRequest) {
-        RestAssured.given()
-                .header("Content-Type", "application/json")
-                .body(objectMapper.writeValueAsString(restRequest))
-                .`when`()
-                .post("/ecommerce/cart")
-                .then()
-                .statusCode(HttpStatus.CREATED.value())
-    }
 }

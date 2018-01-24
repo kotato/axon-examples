@@ -29,7 +29,7 @@ class SubtractCartItemControllerTest : ContextStarterTest() {
 
     @Test
     fun `it should subtract item to cart`() {
-        val cartId = CreateCartRestRequestStub.random().also { createCart(it) }.id!!
+        val cartId = CreateCartRestRequestStub.random().also { cartFlow.createCart(it) }.id!!
         val addItem = AddCartItemRestRequestStub.random()
         val subItem = SubtractCartItemRestRequestStub.random(itemId = addItem.itemId!!,
                                                              price = addItem.price!!,
@@ -51,7 +51,7 @@ class SubtractCartItemControllerTest : ContextStarterTest() {
 
     @Test
     fun `it should subtract item to cart with same quantity as actual has`() {
-        val cartId = CreateCartRestRequestStub.random().also { createCart(it) }.id!!
+        val cartId = CreateCartRestRequestStub.random().also { cartFlow.createCart(it) }.id!!
         val addItem = AddCartItemRestRequestStub.random()
         val subItem = SubtractCartItemRestRequestStub.random(itemId = addItem.itemId!!,
                                                              price = addItem.price!!,
@@ -70,7 +70,7 @@ class SubtractCartItemControllerTest : ContextStarterTest() {
 
     @Test
     fun `it should subtract item to cart with more quantity than actual has`() {
-        val cartId = CreateCartRestRequestStub.random().also { createCart(it) }.id!!
+        val cartId = CreateCartRestRequestStub.random().also { cartFlow.createCart(it) }.id!!
         val addItem = AddCartItemRestRequestStub.random()
         val subItem = SubtractCartItemRestRequestStub.random(itemId = addItem.itemId!!,
                                                              price = addItem.price!!,
@@ -96,7 +96,7 @@ class SubtractCartItemControllerTest : ContextStarterTest() {
     @Test
     fun `it should throw exception when trying to subtract a cart item because no item in cart`() {
         CreateCartRestRequestStub.random()
-                .also { createCart(it) }
+                .also { cartFlow.createCart(it) }
                 .let {
                     patch(SubtractCartItemRestRequestStub.random(), CartId(it.id!!))
                             .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
@@ -109,15 +109,5 @@ class SubtractCartItemControllerTest : ContextStarterTest() {
             .`when`()
             .patch("/ecommerce/cart/${cartId.asString()}")
             .then()
-
-    private fun createCart(restRequest: CreateCartRestRequest) {
-        RestAssured.given()
-                .header("Content-Type", "application/json")
-                .body(objectMapper.writeValueAsString(restRequest))
-                .`when`()
-                .post("/ecommerce/cart")
-                .then()
-                .statusCode(HttpStatus.CREATED.value())
-    }
 
 }

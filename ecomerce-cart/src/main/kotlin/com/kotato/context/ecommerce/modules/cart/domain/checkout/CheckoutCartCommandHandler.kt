@@ -5,10 +5,10 @@ import com.kotato.cqrs.domain.command.CommandHandler
 import javax.inject.Named
 
 @Named
-open class CheckoutCommandHandler(private val checkout: CartCheckout) {
+open class CheckoutCartCommandHandler(private val checkout: CartCheckout) {
 
     @CommandHandler
-    fun on(command: CheckoutCommand) {
+    fun on(command: CheckoutCartCommand) {
         checkout(CartId.fromString(command.cartId))
     }
 }

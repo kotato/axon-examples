@@ -6,12 +6,12 @@ import com.kotato.context.ecommerce.modules.cart.domain.checkout.CartCheckedOutE
 import com.kotato.context.ecommerce.modules.cart.domain.checkout.CartCheckout
 import com.kotato.context.ecommerce.modules.cart.domain.checkout.CartAlreadyCheckoutException
 import com.kotato.context.ecommerce.modules.cart.domain.checkout.CartIsEmptyException
-import com.kotato.context.ecommerce.modules.cart.domain.checkout.CheckoutCommandHandler
+import com.kotato.context.ecommerce.modules.cart.domain.checkout.CheckoutCartCommandHandler
 import com.kotato.context.ecommerce.modules.cart.infrastructure.AxonCartRepository
 import com.kotato.context.ecommerce.modules.cart.stub.CartCheckedOutEventStub
 import com.kotato.context.ecommerce.modules.cart.stub.CartCreatedEventStub
 import com.kotato.context.ecommerce.modules.cart.stub.CartItemAddedEventStub
-import com.kotato.context.ecommerce.modules.cart.stub.CheckoutCommandStub
+import com.kotato.context.ecommerce.modules.cart.stub.CheckoutCartCommandStub
 import com.kotato.shared.expectDomainEvent
 import com.kotato.shared.loadAggregate
 import org.axonframework.test.aggregate.AggregateTestFixture
@@ -24,7 +24,7 @@ class CartCheckoutTest {
     private val fixture = AggregateTestFixture(Cart::class.java)
     private val repository = AxonCartRepository(fixture.repository)
     private val service = CartCheckout(repository)
-    private val handler = CheckoutCommandHandler(service)
+    private val handler = CheckoutCartCommandHandler(service)
 
     @BeforeEach
     fun setUp() {
@@ -33,7 +33,7 @@ class CartCheckoutTest {
 
     @Test
     fun `it should checkout a cart with two items`() {
-        val command = CheckoutCommandStub.random()
+        val command = CheckoutCartCommandStub.random()
         val expected = CartCheckedOutEvent(command.cartId,
                                            ZonedDateTime.now())
         val givenCartCreated = CartCreatedEventStub.random(aggregateId = command.cartId)
@@ -50,7 +50,7 @@ class CartCheckoutTest {
 
     @Test
     fun `it should throw exception when try to checkout a cart that doesn't exist`() {
-        val command = CheckoutCommandStub.random()
+        val command = CheckoutCartCommandStub.random()
         fixture.givenNoPriorActivity()
                 .`when`(command)
                 .expectException(CartDoesNotExistsException::class.java)
@@ -58,7 +58,7 @@ class CartCheckoutTest {
 
     @Test
     fun `it should throw exception when try to checkout an empty cart`() {
-        val command = CheckoutCommandStub.random()
+        val command = CheckoutCartCommandStub.random()
         val givenCartCreated = CartCreatedEventStub.random(aggregateId = command.cartId)
         fixture.given(givenCartCreated)
                 .`when`(command)
@@ -67,7 +67,7 @@ class CartCheckoutTest {
 
     @Test
     fun `it should throw exception when try to checkout a cart checked out`() {
-        val command = CheckoutCommandStub.random()
+        val command = CheckoutCartCommandStub.random()
         val givenCartCreated = CartCreatedEventStub.random(aggregateId = command.cartId)
         val givenAddCartItem = CartItemAddedEventStub.random(aggregateId = command.cartId)
         val givenCheckedOut = CartCheckedOutEventStub.random(aggregateId = command.cartId)
