@@ -2,7 +2,7 @@ package com.kotato.context.ecommerce.modules.cart.domain
 
 import com.kotato.context.ecommerce.modules.cart.domain.add.CartItemAddedEvent
 import com.kotato.context.ecommerce.modules.cart.domain.checkout.CartCheckedOutEvent
-import com.kotato.context.ecommerce.modules.cart.domain.checkout.CartIsCheckoutException
+import com.kotato.context.ecommerce.modules.cart.domain.checkout.CartAlreadyCheckoutException
 import com.kotato.context.ecommerce.modules.cart.domain.checkout.CartIsEmptyException
 import com.kotato.context.ecommerce.modules.cart.domain.create.CartCreatedEvent
 import com.kotato.context.ecommerce.modules.cart.domain.subtract.CartItemIsNotInCartException
@@ -86,7 +86,7 @@ class Cart {
     }
 
     private fun guardCartIsNotCheckout() {
-        if (checkout) throw CartIsCheckoutException()
+        if (checkout) throw CartAlreadyCheckoutException()
     }
 
     private fun guardItemExistsInCart(cartItem: CartItem) {

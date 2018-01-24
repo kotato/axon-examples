@@ -4,7 +4,7 @@ import com.kotato.context.ecommerce.modules.cart.domain.Cart
 import com.kotato.context.ecommerce.modules.cart.domain.CartDoesNotExistsException
 import com.kotato.context.ecommerce.modules.cart.domain.checkout.CartCheckedOutEvent
 import com.kotato.context.ecommerce.modules.cart.domain.checkout.CartCheckout
-import com.kotato.context.ecommerce.modules.cart.domain.checkout.CartIsCheckoutException
+import com.kotato.context.ecommerce.modules.cart.domain.checkout.CartAlreadyCheckoutException
 import com.kotato.context.ecommerce.modules.cart.domain.checkout.CartIsEmptyException
 import com.kotato.context.ecommerce.modules.cart.domain.checkout.CheckoutCommandHandler
 import com.kotato.context.ecommerce.modules.cart.infrastructure.AxonCartRepository
@@ -73,6 +73,6 @@ class CartCheckoutTest {
         val givenCheckedOut = CartCheckedOutEventStub.random(aggregateId = command.cartId)
         fixture.given(givenCartCreated, givenAddCartItem, givenCheckedOut)
                 .`when`(command)
-                .expectException(CartIsCheckoutException::class.java)
+                .expectException(CartAlreadyCheckoutException::class.java)
     }
 }

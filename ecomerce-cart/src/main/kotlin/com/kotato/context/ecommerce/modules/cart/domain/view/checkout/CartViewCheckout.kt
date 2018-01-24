@@ -14,13 +14,13 @@ open class CartViewCheckout(private val repository: CartViewRepository) {
     open operator fun invoke(cartId: CartId) {
         repository.search(cartId)
                 .also { guardCartViewExists(cartId, it) }!!
-                .let { it.copy(checkout = true) }
+                .copy(checkout = true)
                 .let(repository::save)
 
     }
 
     private fun guardCartViewExists(id: CartId, cart: CartView?) {
-        if (null == cart) throw CartViewNotFoundException(id.asString())
+        cart ?: throw CartViewNotFoundException(id.asString())
     }
 
 }

@@ -16,7 +16,7 @@ class CartCheckout(private val repository: CartRepository) {
 
 
     private fun guardCartExists(id: CartId, cart: Cart?) {
-        if (null == cart) throw CartDoesNotExistsException(id.asString())
+        cart ?: throw CartDoesNotExistsException(id.asString())
     }
 
 }
