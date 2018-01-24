@@ -8,11 +8,10 @@ import java.util.UUID
 
 class SubtractCartItemRestRequestStub {
     companion object {
-        fun random(cartId: UUID = CartIdStub.random().id,
-                   itemId: UUID = ItemIdStub.random().id,
+        fun random(itemId: UUID = ItemIdStub.random().id,
                    price: BigDecimal = BigDecimalStub.random(),
                    currency: String = "EUR",
                    quantity: Int = Faker().number().numberBetween(-100, -1)
-                   ) = CartItemRestRequest(cartId, itemId, price, currency, quantity)
+                   ) = CartItemRestRequest(itemId, price, currency, quantity)
     }
 }

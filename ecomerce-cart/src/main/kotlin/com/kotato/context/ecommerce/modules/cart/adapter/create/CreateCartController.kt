@@ -17,7 +17,7 @@ open class CreateCartController(@Inject val commandBus: CommandBus) {
     open fun potato(@RequestBody @Valid request: CreateCartRestRequest): ResponseEntity<Unit> {
         commandBus.handle(CreateCartCommand(request.id!!.toString(),
                                             request.userId!!.toString()))
-        return ResponseEntity.created(URI("/ecommerce/cart/main")).build()
+        return ResponseEntity.created(URI("/ecommerce/cart/${request.id}")).build()
     }
 
 }

@@ -5,7 +5,6 @@ import java.util.UUID
 import javax.validation.constraints.NotNull
 
 data class CartItemRestRequest(
-        @field:NotNull val cartId: UUID?,
         @field:NotNull val itemId: UUID?,
         @field:NotNull val price: BigDecimal?,
         @field:NotNull val currency: String?,

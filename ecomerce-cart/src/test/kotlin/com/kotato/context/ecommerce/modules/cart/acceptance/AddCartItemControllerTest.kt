@@ -34,10 +34,10 @@ class AddCartItemControllerTest : ContextStarterTest() {
         val createCartRestRequest = CreateCartRestRequestStub.random(cartId = cartId.id)
         createCart(createCartRestRequest)
 
-        val restRequest = AddCartItemRestRequestStub.random(cartId = cartId.id)
-        patch(restRequest)
+        val restRequest = AddCartItemRestRequestStub.random()
+        patch(restRequest, cartId.asString())
 
-        wrapper.wrap { repository.search(CartId.fromString(restRequest.cartId!!.toString())) }
+        wrapper.wrap { repository.search(cartId) }
                 .let {
                     assertNotNull(it)
                     val cartItem = CartItem(ItemId.fromString(restRequest.itemId!!.toString()),
@@ -56,10 +56,10 @@ class AddCartItemControllerTest : ContextStarterTest() {
         val createCartRestRequest = CreateCartRestRequestStub.random(cartId = cartId.id)
         createCart(createCartRestRequest)
 
-        val restRequest = AddCartItemRestRequestStub.random(cartId = cartId.id)
-        (0..1).forEach { patch(restRequest) }
+        val restRequest = AddCartItemRestRequestStub.random()
+        (0..1).forEach { patch(restRequest, cartId.asString()) }
 
-        wrapper.wrap { repository.search(CartId.fromString(restRequest.cartId!!.toString())) }
+        wrapper.wrap { repository.search(cartId) }
                 .let {
                     assertNotNull(it)
                     val cartItem = CartItem(ItemId.fromString(restRequest.itemId!!.toString()),
@@ -78,13 +78,13 @@ class AddCartItemControllerTest : ContextStarterTest() {
         val createCartRestRequest = CreateCartRestRequestStub.random(cartId = cartId.id)
         createCart(createCartRestRequest)
 
-        val restRequest = AddCartItemRestRequestStub.random(cartId = cartId.id)
-        patch(restRequest)
+        val restRequest = AddCartItemRestRequestStub.random()
+        patch(restRequest, cartId.asString())
 
-        val restRequest2 = AddCartItemRestRequestStub.random(cartId = cartId.id)
-        patch(restRequest2)
+        val restRequest2 = AddCartItemRestRequestStub.random()
+        patch(restRequest2, cartId.asString())
 
-        wrapper.wrap { repository.search(CartId.fromString(restRequest.cartId!!.toString())) }
+        wrapper.wrap { repository.search(cartId) }
                 .let {
                     assertNotNull(it)
                     val cartItem = CartItem(ItemId.fromString(restRequest.itemId!!.toString()),
@@ -106,17 +106,17 @@ class AddCartItemControllerTest : ContextStarterTest() {
                 .header("Content-Type", "application/json")
                 .body(objectMapper.writeValueAsString(AddCartItemRestRequestStub.random()))
                 .`when`()
-                .patch("/ecommerce/cart/main")
+                .patch("/ecommerce/cart/${CartIdStub.random()}")
                 .then()
                 .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
     }
 
-    private fun patch(restRequest: CartItemRestRequest) {
+    private fun patch(restRequest: CartItemRestRequest, id: String) {
         RestAssured.given()
                 .header("Content-Type", "application/json")
                 .body(objectMapper.writeValueAsString(restRequest))
                 .`when`()
-                .patch("/ecommerce/cart/main")
+                .patch("/ecommerce/cart/$id")
                 .then()
                 .statusCode(HttpStatus.NO_CONTENT.value())
     }
