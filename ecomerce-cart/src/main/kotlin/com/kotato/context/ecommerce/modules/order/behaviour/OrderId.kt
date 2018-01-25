@@ -1,4 +1,4 @@
-package com.kotato.context.ecommerce.modules.order.domain
+package com.kotato.context.ecommerce.modules.order.behaviour
 
 import com.kotato.shared.valueobject.ValueObject
 import java.io.Serializable

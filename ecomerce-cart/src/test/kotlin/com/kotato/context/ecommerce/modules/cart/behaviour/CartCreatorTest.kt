@@ -13,7 +13,6 @@ import com.kotato.shared.loadAggregate
 import org.axonframework.test.aggregate.AggregateTestFixture
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import java.time.ZonedDateTime
 import kotlin.test.assertEquals
 
 class CartCreatorTest {

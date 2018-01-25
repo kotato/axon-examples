@@ -4,7 +4,7 @@ import com.kotato.context.ecommerce.modules.cart.domain.Cart
 import com.kotato.context.ecommerce.modules.cart.domain.CartDoesNotExistsException
 import com.kotato.context.ecommerce.modules.cart.domain.CartId
 import com.kotato.context.ecommerce.modules.cart.domain.create.CartRepository
-import com.kotato.context.ecommerce.modules.order.domain.OrderId
+import com.kotato.context.ecommerce.modules.order.behaviour.OrderId
 import javax.inject.Named
 
 @Named
