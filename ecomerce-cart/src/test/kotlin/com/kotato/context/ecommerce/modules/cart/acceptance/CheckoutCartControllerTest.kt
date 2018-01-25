@@ -1,7 +1,5 @@
 package com.kotato.context.ecommerce.modules.cart.acceptance
 
-import com.kotato.context.ecommerce.modules.cart.adapter.create.CreateCartRestRequest
-import com.kotato.context.ecommerce.modules.cart.adapter.update.CartItemRestRequest
 import com.kotato.context.ecommerce.modules.cart.domain.CartId
 import com.kotato.context.ecommerce.modules.cart.domain.view.CartViewRepository
 import com.kotato.context.ecommerce.modules.cart.stub.AddCartItemRestRequestStub
@@ -24,7 +22,7 @@ class CheckoutCartControllerTest : ContextStarterTest() {
         cartFlow.createCart(CreateCartRestRequestStub.random(cartId.id))
         cartFlow.addItem(AddCartItemRestRequestStub.random(), cartId)
         checkout(cartId)
-                .statusCode(HttpStatus.NO_CONTENT.value())
+                .statusCode(HttpStatus.CREATED.value())
 
         assertTrue { repository.search(cartId)!!.checkout }
     }

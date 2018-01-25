@@ -5,7 +5,8 @@ import java.time.ZonedDateTime
 
 
 data class CartCheckedOutEvent(val aggregateId: String,
-                               val occurredOn: ZonedDateTime) : DomainEvent {
+                               val occurredOn: ZonedDateTime,
+                               val orderId: String) : DomainEvent {
     override fun aggregateId(): String = this.aggregateId
     override fun occurredOn(): ZonedDateTime = this.occurredOn
 }

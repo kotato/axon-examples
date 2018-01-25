@@ -35,7 +35,8 @@ class CartCheckoutTest {
     fun `it should checkout a cart with two items`() {
         val command = CheckoutCartCommandStub.random()
         val expected = CartCheckedOutEvent(command.cartId,
-                                           ZonedDateTime.now())
+                                           ZonedDateTime.now(),
+                                           command.orderId)
         val givenCartCreated = CartCreatedEventStub.random(aggregateId = command.cartId)
         val givenAddCartItem1 = CartItemAddedEventStub.random(aggregateId = command.cartId)
         val givenAddCartItem2 = CartItemAddedEventStub.random(aggregateId = command.cartId)
