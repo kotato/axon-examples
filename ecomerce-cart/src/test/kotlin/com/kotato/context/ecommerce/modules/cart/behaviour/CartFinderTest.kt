@@ -31,6 +31,7 @@ class CartFinderTest {
         val query = FindCartQuery(view.id.asString())
         val expected = CartResponse(view.id.asString(),
                                     view.createdOn,
+                                    view.userId.asString(),
                                     view.cartItems.toSerializedCartItems(),
                                     view.checkout)
 

@@ -8,13 +8,14 @@ import com.kotato.context.ecommerce.modules.order.behaviour.view.OrderView
 import com.kotato.context.ecommerce.modules.order.behaviour.view.OrderViewRepository
 import com.kotato.context.ecommerce.modules.payment.domain.PaymentId
 import com.kotato.context.ecommerce.modules.user.domain.UserId
+import com.kotato.shared.transaction.ReadModelTransaction
 import java.time.ZonedDateTime
 import javax.inject.Named
 
 @Named
 open class OrderViewCreator(private val repository: OrderViewRepository) {
 
-
+    @ReadModelTransaction
     open operator fun invoke(orderId: OrderId,
                              createdOn: ZonedDateTime,
                              cartId: CartId,

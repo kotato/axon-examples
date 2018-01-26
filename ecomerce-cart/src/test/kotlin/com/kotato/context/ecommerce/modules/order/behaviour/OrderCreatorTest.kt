@@ -36,7 +36,8 @@ class OrderCreatorTest {
         val expected = OrderCreatedEventStub.random(aggregateId = event.orderId,
                                                     cartId = event.aggregateId)
         val response = CartResponseStub.random(cartId = expected.cartId,
-                                               cartItems = expected.cartItems)
+                                               cartItems = expected.cartItems,
+                                               userId = expected.userId)
 
         shouldFindCart(event.aggregateId, response)
 

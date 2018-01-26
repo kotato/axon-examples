@@ -45,6 +45,6 @@ class CartFlow(private val objectMapper: ObjectMapper) {
                 .`when`()
                 .post("/ecommerce/cart/$id/checkout")
                 .then()
-                .statusCode(HttpStatus.NO_CONTENT.value())
+                .statusCode(HttpStatus.CREATED.value())
     }
 }
