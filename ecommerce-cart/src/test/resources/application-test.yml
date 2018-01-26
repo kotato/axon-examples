@@ -1,0 +1,13 @@
+write-model:
+  hibernate:
+    ddl-auto: none
+    show-sql: false
+read-model:
+  hibernate:
+    ddl-auto: none
+    show-sql: false
+
+logging.level.org.springframework: ERROR
+logging.level.org.quartz: ERROR
+logging.level.org.hibernate: ERROR
+logging.level.org.axonframework: ERROR
