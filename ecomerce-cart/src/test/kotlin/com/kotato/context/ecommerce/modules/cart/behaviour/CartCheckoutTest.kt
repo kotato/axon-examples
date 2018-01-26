@@ -2,9 +2,9 @@ package com.kotato.context.ecommerce.modules.cart.behaviour
 
 import com.kotato.context.ecommerce.modules.cart.domain.Cart
 import com.kotato.context.ecommerce.modules.cart.domain.CartDoesNotExistsException
+import com.kotato.context.ecommerce.modules.cart.domain.checkout.CartAlreadyCheckoutException
 import com.kotato.context.ecommerce.modules.cart.domain.checkout.CartCheckedOutEvent
 import com.kotato.context.ecommerce.modules.cart.domain.checkout.CartCheckout
-import com.kotato.context.ecommerce.modules.cart.domain.checkout.CartAlreadyCheckoutException
 import com.kotato.context.ecommerce.modules.cart.domain.checkout.CartIsEmptyException
 import com.kotato.context.ecommerce.modules.cart.domain.checkout.CheckoutCartCommandHandler
 import com.kotato.context.ecommerce.modules.cart.infrastructure.AxonCartRepository
@@ -35,7 +35,8 @@ class CartCheckoutTest {
     fun `it should checkout a cart with two items`() {
         val command = CheckoutCartCommandStub.random()
         val expected = CartCheckedOutEvent(command.cartId,
-                                           ZonedDateTime.now())
+                                           ZonedDateTime.now(),
+                                           command.orderId)
         val givenCartCreated = CartCreatedEventStub.random(aggregateId = command.cartId)
         val givenAddCartItem1 = CartItemAddedEventStub.random(aggregateId = command.cartId)
         val givenAddCartItem2 = CartItemAddedEventStub.random(aggregateId = command.cartId)

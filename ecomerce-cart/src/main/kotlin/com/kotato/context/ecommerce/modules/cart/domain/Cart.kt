@@ -8,6 +8,7 @@ import com.kotato.context.ecommerce.modules.cart.domain.create.CartCreatedEvent
 import com.kotato.context.ecommerce.modules.cart.domain.subtract.CartItemIsNotInCartException
 import com.kotato.context.ecommerce.modules.cart.domain.subtract.CartItemSubtractedEvent
 import com.kotato.context.ecommerce.modules.item.domain.ItemId
+import com.kotato.context.ecommerce.modules.order.behaviour.OrderId
 import com.kotato.context.ecommerce.modules.user.domain.UserId
 import com.kotato.shared.money.Money
 import org.axonframework.commandhandling.model.AggregateIdentifier
@@ -74,11 +75,12 @@ class Cart {
                                       currency = cartItem.price.currency))
     }
 
-    fun checkout() {
+    fun checkout(orderId: OrderId) {
         guardThereAreItems()
         guardCartIsNotCheckout()
         apply(CartCheckedOutEvent(aggregateId = id.asString(),
-                                  occurredOn = ZonedDateTime.now()))
+                                  occurredOn = ZonedDateTime.now(),
+                                  orderId = orderId.asString()))
     }
 
     private fun guardThereAreItems() {
