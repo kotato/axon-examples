@@ -6,6 +6,7 @@ import com.kotato.context.ecommerce.modules.order.behaviour.Order
 import com.kotato.context.ecommerce.modules.order.behaviour.OrderId
 import com.kotato.context.ecommerce.modules.order.behaviour.OrderRepository
 import com.kotato.context.ecommerce.modules.payment.domain.PaymentId
+import com.kotato.context.ecommerce.modules.user.domain.UserId
 import org.axonframework.commandhandling.model.AggregateNotFoundException
 import org.springframework.stereotype.Repository
 import org.axonframework.commandhandling.model.Repository as AggregateRepository
@@ -19,9 +20,9 @@ open class AxonOrderRepository(private val persistenceRepository: AggregateRepos
             null
         }
 
-    override fun new(orderId: OrderId, cartId: CartId, paymentId: PaymentId, cartItems: CartItems) {
+    override fun new(orderId: OrderId, cartId: CartId, paymentId: PaymentId, userId: UserId, cartItems: CartItems) {
         persistenceRepository.newInstance {
-            Order.create(orderId, cartId, paymentId, cartItems)
+            Order.create(orderId, cartId, paymentId, userId, cartItems)
             Order()
         }
     }

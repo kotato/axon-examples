@@ -9,6 +9,7 @@ data class OrderCreatedEvent(val aggregateId: String,
                              val occurredOn: ZonedDateTime,
                              val cartId: String,
                              val paymentId: String,
+                             val userId: String,
                              val cartItems: SerializedCartItems) : DomainEvent {
 
     override fun aggregateId() = this.aggregateId

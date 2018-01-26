@@ -5,5 +5,6 @@ import java.time.ZonedDateTime
 
 data class CartResponse(val cartId: String,
                         val createdOn: ZonedDateTime,
+                        val userId: String,
                         val cartItems: SerializedCartItems,
                         val checkout: Boolean)

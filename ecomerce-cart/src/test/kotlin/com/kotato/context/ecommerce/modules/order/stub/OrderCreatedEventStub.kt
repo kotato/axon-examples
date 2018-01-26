@@ -6,6 +6,7 @@ import com.kotato.context.ecommerce.modules.cart.stub.CartIdStub
 import com.kotato.context.ecommerce.modules.cart.stub.CartItemsStub
 import com.kotato.context.ecommerce.modules.order.behaviour.create.OrderCreatedEvent
 import com.kotato.context.ecommerce.modules.payment.stub.PaymentIdStub
+import com.kotato.context.ecommerce.modules.user.stub.UserIdStub
 import java.time.ZonedDateTime
 
 class OrderCreatedEventStub {
@@ -14,7 +15,8 @@ class OrderCreatedEventStub {
                    occurredOn: ZonedDateTime = ZonedDateTime.now(),
                    cartId: String = CartIdStub.random().asString(),
                    paymentId: String = PaymentIdStub.random().asString(),
+                   userId: String = UserIdStub.random().asString(),
                    cartItems: SerializedCartItems = CartItemsStub.random().toSerializedCartItems())
-                = OrderCreatedEvent(aggregateId, occurredOn, cartId, paymentId, cartItems)
+                = OrderCreatedEvent(aggregateId, occurredOn, cartId, paymentId, userId, cartItems)
     }
 }
