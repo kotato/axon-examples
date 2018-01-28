@@ -1,6 +1,5 @@
 buildscript {
 	ext {
-		kotlinVersion = '1.1.51'
 		springBootVersion = '1.5.8.RELEASE'
 	}
 	repositories {
@@ -33,5 +32,5 @@ repositories {
 }
 
 dependencies {
-	compile project(path: "ecomerce-cart")
+	compile project(path: "ecommerce-cart")
 }
