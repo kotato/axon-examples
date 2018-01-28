@@ -6,9 +6,10 @@ import com.kotato.context.ecommerce.modules.cart.domain.view.find.FindCartQuery
 import com.kotato.context.ecommerce.modules.cart.domain.view.find.FindCartQueryAsker
 import com.kotato.context.ecommerce.modules.cart.stub.CartCheckedOutEventStub
 import com.kotato.context.ecommerce.modules.cart.stub.CartResponseStub
-import com.kotato.context.ecommerce.modules.order.behaviour.create.CreateOrderOnCartCheckedOutEventHandler
-import com.kotato.context.ecommerce.modules.order.behaviour.create.OrderCreatedEvent
-import com.kotato.context.ecommerce.modules.order.behaviour.create.OrderCreator
+import com.kotato.context.ecommerce.modules.order.domain.Order
+import com.kotato.context.ecommerce.modules.order.domain.create.CreateOrderOnCartCheckedOutEventHandler
+import com.kotato.context.ecommerce.modules.order.domain.create.OrderCreatedEvent
+import com.kotato.context.ecommerce.modules.order.domain.create.OrderCreator
 import com.kotato.context.ecommerce.modules.order.infrastructure.AxonOrderRepository
 import com.kotato.context.ecommerce.modules.order.stub.OrderCreatedEventStub
 import com.kotato.cqrs.domain.query.QueryBus

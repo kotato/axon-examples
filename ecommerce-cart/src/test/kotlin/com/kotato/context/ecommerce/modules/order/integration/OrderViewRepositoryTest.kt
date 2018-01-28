@@ -1,8 +1,7 @@
 package com.kotato.context.ecommerce.modules.order.integration
 
 import com.kotato.assertSimilar.MatcherSimilar.assertSimilar
-import com.kotato.context.ecommerce.modules.cart.stub.CartViewStub
-import com.kotato.context.ecommerce.modules.order.behaviour.view.OrderViewRepository
+import com.kotato.context.ecommerce.modules.order.domain.view.OrderViewRepository
 import com.kotato.context.ecommerce.modules.order.stub.OrderViewStub
 import com.kotato.shared.ContextStarterTest
 import com.kotato.shared.TransactionalWrapper

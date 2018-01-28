@@ -1,4 +1,4 @@
-package com.kotato.context.ecommerce.modules.order.behaviour
+package com.kotato.context.ecommerce.modules.order.domain
 
 import com.kotato.context.ecommerce.modules.cart.domain.CartId
 import com.kotato.context.ecommerce.modules.cart.domain.CartItems

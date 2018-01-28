@@ -1,4 +1,4 @@
-package com.kotato.context.ecommerce.modules.order.behaviour
+package com.kotato.context.ecommerce.modules.order.domain
 
 enum class OrderStatus {
 

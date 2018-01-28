@@ -1,10 +1,10 @@
-package com.kotato.context.ecommerce.modules.order.behaviour.create
+package com.kotato.context.ecommerce.modules.order.domain.create
 
 import com.kotato.context.ecommerce.modules.cart.domain.CartId
 import com.kotato.context.ecommerce.modules.cart.domain.toCartItems
 import com.kotato.context.ecommerce.modules.cart.domain.view.find.FindCartQueryAsker
-import com.kotato.context.ecommerce.modules.order.behaviour.OrderId
-import com.kotato.context.ecommerce.modules.order.behaviour.OrderRepository
+import com.kotato.context.ecommerce.modules.order.domain.OrderId
+import com.kotato.context.ecommerce.modules.order.domain.OrderRepository
 import com.kotato.context.ecommerce.modules.payment.domain.PaymentId
 import com.kotato.context.ecommerce.modules.user.domain.UserId
 import javax.inject.Named

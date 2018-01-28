@@ -2,9 +2,9 @@ package com.kotato.context.ecommerce.modules.order.infrastructure
 
 import com.kotato.context.ecommerce.modules.cart.domain.CartId
 import com.kotato.context.ecommerce.modules.cart.domain.CartItems
-import com.kotato.context.ecommerce.modules.order.behaviour.Order
-import com.kotato.context.ecommerce.modules.order.behaviour.OrderId
-import com.kotato.context.ecommerce.modules.order.behaviour.OrderRepository
+import com.kotato.context.ecommerce.modules.order.domain.Order
+import com.kotato.context.ecommerce.modules.order.domain.OrderId
+import com.kotato.context.ecommerce.modules.order.domain.OrderRepository
 import com.kotato.context.ecommerce.modules.payment.domain.PaymentId
 import com.kotato.context.ecommerce.modules.user.domain.UserId
 import org.axonframework.commandhandling.model.AggregateNotFoundException

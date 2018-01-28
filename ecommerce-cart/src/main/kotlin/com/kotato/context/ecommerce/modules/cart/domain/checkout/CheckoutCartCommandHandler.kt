@@ -1,7 +1,7 @@
 package com.kotato.context.ecommerce.modules.cart.domain.checkout
 
 import com.kotato.context.ecommerce.modules.cart.domain.CartId
-import com.kotato.context.ecommerce.modules.order.behaviour.OrderId
+import com.kotato.context.ecommerce.modules.order.domain.OrderId
 import com.kotato.cqrs.domain.command.CommandHandler
 import javax.inject.Named
 

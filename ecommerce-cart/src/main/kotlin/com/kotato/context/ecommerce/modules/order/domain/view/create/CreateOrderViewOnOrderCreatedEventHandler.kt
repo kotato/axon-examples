@@ -1,9 +1,9 @@
-package com.kotato.context.ecommerce.modules.order.behaviour.view.create
+package com.kotato.context.ecommerce.modules.order.domain.view.create
 
 import com.kotato.context.ecommerce.modules.cart.domain.CartId
 import com.kotato.context.ecommerce.modules.cart.domain.toCartItems
-import com.kotato.context.ecommerce.modules.order.behaviour.OrderId
-import com.kotato.context.ecommerce.modules.order.behaviour.create.OrderCreatedEvent
+import com.kotato.context.ecommerce.modules.order.domain.OrderId
+import com.kotato.context.ecommerce.modules.order.domain.create.OrderCreatedEvent
 import com.kotato.context.ecommerce.modules.payment.domain.PaymentId
 import com.kotato.context.ecommerce.modules.user.domain.UserId
 import org.axonframework.eventhandling.EventHandler

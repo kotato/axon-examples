@@ -1,10 +1,10 @@
-package com.kotato.context.ecommerce.modules.order.behaviour
+package com.kotato.context.ecommerce.modules.order.domain
 
 import com.kotato.context.ecommerce.modules.cart.domain.CartId
 import com.kotato.context.ecommerce.modules.cart.domain.CartItems
 import com.kotato.context.ecommerce.modules.cart.domain.toCartItems
 import com.kotato.context.ecommerce.modules.cart.domain.toSerializedCartItems
-import com.kotato.context.ecommerce.modules.order.behaviour.create.OrderCreatedEvent
+import com.kotato.context.ecommerce.modules.order.domain.create.OrderCreatedEvent
 import com.kotato.context.ecommerce.modules.payment.domain.PaymentId
 import com.kotato.context.ecommerce.modules.user.domain.UserId
 import org.axonframework.commandhandling.model.AggregateIdentifier

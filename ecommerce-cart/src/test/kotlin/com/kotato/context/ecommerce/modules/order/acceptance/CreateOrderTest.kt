@@ -8,7 +8,7 @@ import com.kotato.context.ecommerce.modules.cart.stub.AddCartItemRestRequestStub
 import com.kotato.context.ecommerce.modules.cart.stub.CartIdStub
 import com.kotato.context.ecommerce.modules.cart.stub.CreateCartRestRequestStub
 import com.kotato.context.ecommerce.modules.item.domain.ItemId
-import com.kotato.context.ecommerce.modules.order.behaviour.view.OrderViewRepository
+import com.kotato.context.ecommerce.modules.order.domain.view.OrderViewRepository
 import com.kotato.context.ecommerce.modules.user.domain.UserId
 import com.kotato.shared.ContextStarterTest
 import com.kotato.shared.money.Money

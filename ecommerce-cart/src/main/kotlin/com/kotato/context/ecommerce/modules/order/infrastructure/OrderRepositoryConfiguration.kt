@@ -1,6 +1,6 @@
 package com.kotato.context.ecommerce.modules.order.infrastructure
 
-import com.kotato.context.ecommerce.modules.order.behaviour.Order
+import com.kotato.context.ecommerce.modules.order.domain.Order
 import org.axonframework.commandhandling.model.Repository
 import org.axonframework.common.caching.Cache
 import org.axonframework.eventsourcing.AggregateFactory
