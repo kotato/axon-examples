@@ -1,4 +1,4 @@
-package com.kotato.context.ecommerce.modules.order.acceptance
+package com.kotato.context.ecommerce.modules.payment.acceptance
 
 import com.kotato.assertSimilar.MatcherSimilar.assertSimilar
 import com.kotato.context.ecommerce.modules.cart.adapter.update.CartItemRestRequest
@@ -9,17 +9,19 @@ import com.kotato.context.ecommerce.modules.cart.stub.CartIdStub
 import com.kotato.context.ecommerce.modules.cart.stub.CreateCartRestRequestStub
 import com.kotato.context.ecommerce.modules.item.domain.ItemId
 import com.kotato.context.ecommerce.modules.order.domain.view.OrderViewRepository
-import com.kotato.context.ecommerce.modules.user.domain.UserId
+import com.kotato.context.ecommerce.modules.payment.domain.PaymentStatus
+import com.kotato.context.ecommerce.modules.payment.domain.view.PaymentViewRepository
+import com.kotato.context.ecommerce.modules.payment.stub.PaymentViewStub
 import com.kotato.shared.ContextStarterTest
 import com.kotato.shared.money.Money
 import org.junit.jupiter.api.Test
-import java.time.ZonedDateTime
 import javax.inject.Inject
 import kotlin.test.assertNotNull
 
-class CreateOrderTest : ContextStarterTest() {
+class CreatePaymentTest : ContextStarterTest() {
 
-    @Inject private lateinit var repository: OrderViewRepository
+    @Inject private lateinit var orderRepository: OrderViewRepository
+    @Inject private lateinit var paymentRepository: PaymentViewRepository
 
     @Test
     fun `it should create an order`() {
@@ -33,14 +35,16 @@ class CreateOrderTest : ContextStarterTest() {
 
         Thread.sleep(200)
 
-        repository.searchByCartId(cartId)
+        val paymentId = orderRepository.searchByCartId(cartId).also { assertNotNull(it) }!!.paymentId
+        paymentRepository.search(paymentId)
                 .also { assertNotNull(it) }!!
                 .let {
-                    assertSimilar(it.cartId, cartId)
-                    assertSimilar(it.userId, UserId(createCart.userId!!))
-                    assertSimilar(it.createdOn, ZonedDateTime.now())
-                    assertSimilar(it.cartItems, addItem.getCartItems())
+                    assertSimilar(it, PaymentViewStub.random(
+                            id = paymentId,
+                            price = Money.of(addItem.price!!, addItem.currency!!) * Amount(addItem.quantity!!),
+                            status = PaymentStatus.PENDING))
                 }
+
 
     }
 

@@ -1,7 +1,7 @@
-package com.kotato.context.ecommerce.modules.order.behaviour.view
+package com.kotato.context.ecommerce.modules.order.domain.view
 
 import com.kotato.context.ecommerce.modules.cart.domain.CartId
-import com.kotato.context.ecommerce.modules.order.behaviour.OrderId
+import com.kotato.context.ecommerce.modules.order.domain.OrderId
 
 interface OrderViewRepository {
 

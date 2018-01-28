@@ -1,4 +1,4 @@
-package com.kotato.context.ecommerce.modules.order.behaviour.create
+package com.kotato.context.ecommerce.modules.order.domain.create
 
 import com.kotato.context.ecommerce.modules.cart.domain.SerializedCartItems
 import com.kotato.shared.domainevent.DomainEvent

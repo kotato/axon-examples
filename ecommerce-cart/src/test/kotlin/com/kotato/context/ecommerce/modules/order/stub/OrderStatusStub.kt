@@ -1,7 +1,7 @@
 package com.kotato.context.ecommerce.modules.order.stub
 
 import com.github.javafaker.Faker
-import com.kotato.context.ecommerce.modules.order.behaviour.OrderStatus
+import com.kotato.context.ecommerce.modules.order.domain.OrderStatus
 
 class OrderStatusStub {
     companion object {

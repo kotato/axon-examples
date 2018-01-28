@@ -1,6 +1,6 @@
-package com.kotato.context.ecommerce.modules.order.infrastructure
+package com.kotato.context.ecommerce.modules.payment.infrastructure
 
-import com.kotato.context.ecommerce.modules.order.domain.Order
+import com.kotato.context.ecommerce.modules.payment.domain.Payment
 import org.axonframework.commandhandling.model.Repository
 import org.axonframework.common.caching.Cache
 import org.axonframework.eventsourcing.AggregateFactory
@@ -12,17 +12,17 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
 @Configuration
-open class OrderRepositoryConfiguration {
+open class PaymentRepositoryConfiguration {
 
     @Bean
-    open fun orderAggregateFactory(): AggregateFactory<Order> =
-            SpringPrototypeAggregateFactory<Order>().also {
-                it.setPrototypeBeanName(Order::class.simpleName!!.toLowerCase())
+    open fun paymentAggregateFactory(): AggregateFactory<Payment> =
+            SpringPrototypeAggregateFactory<Payment>().also {
+                it.setPrototypeBeanName(Payment::class.simpleName!!.toLowerCase())
             }
 
     @Bean
-    open fun orderRepository(snapshotter: Snapshotter,
+    open fun paymentRepository(snapshotter: Snapshotter,
                              eventStore: EventStore,
-                             cache: Cache): Repository<Order> =
-            CachingEventSourcingRepository(orderAggregateFactory(), eventStore, cache)
+                             cache: Cache): Repository<Payment> =
+            CachingEventSourcingRepository(paymentAggregateFactory(), eventStore, cache)
 }
