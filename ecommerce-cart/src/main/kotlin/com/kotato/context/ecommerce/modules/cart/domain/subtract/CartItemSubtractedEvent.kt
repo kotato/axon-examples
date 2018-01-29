@@ -10,6 +10,6 @@ data class CartItemSubtractedEvent(val aggregateId: String,
                                    val quantity: Int,
                                    val price: BigDecimal,
                                    val currency: String) : DomainEvent {
-    override fun aggregateId(): String = this.aggregateId
-    override fun occurredOn(): ZonedDateTime = this.occurredOn
+    override fun aggregateId(): String = aggregateId
+    override fun occurredOn(): ZonedDateTime = occurredOn
 }

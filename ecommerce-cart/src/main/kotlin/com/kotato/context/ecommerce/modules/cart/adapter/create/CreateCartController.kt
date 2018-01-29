@@ -11,7 +11,7 @@ import javax.inject.Inject
 import javax.validation.Valid
 
 @RestController
-open class CreateCartController(@Inject val commandBus: CommandBus) {
+open class CreateCartController(@Inject private val commandBus: CommandBus) {
 
     @PostMapping("/ecommerce/cart")
     open fun create(@RequestBody @Valid request: CreateCartRestRequest): ResponseEntity<Unit> {

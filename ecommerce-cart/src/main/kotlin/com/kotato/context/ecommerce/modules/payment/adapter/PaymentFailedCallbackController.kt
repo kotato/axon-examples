@@ -6,10 +6,9 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RestController
-import javax.inject.Inject
 
 @RestController
-open class PaymentFailedCallbackController(@Inject val commandBus: CommandBus) {
+open class PaymentFailedCallbackController(private val commandBus: CommandBus) {
 
     @PostMapping("/ecommerce/payment/{paymentId}/failed")
     open fun checkout(@PathVariable("paymentId") paymentId: String): ResponseEntity<Unit> {

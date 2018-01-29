@@ -12,7 +12,8 @@ open class PaymentViewStatusAsSucceededUpdater(private val repository: PaymentVi
 
     @ReadModelTransaction
     open operator fun invoke(id: PaymentId) {
-        id.let(repository::search)
+        repository
+                .search(id)
                 .also { guardPaymentExists(id, it) }!!
                 .updateAsSucceeded()
                 .let(repository::save)

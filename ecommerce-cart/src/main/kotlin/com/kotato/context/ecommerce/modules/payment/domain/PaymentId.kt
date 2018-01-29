@@ -8,9 +8,9 @@ import javax.persistence.Column
 @ValueObject
 data class PaymentId(@Column(columnDefinition = "binary(16)") val id: UUID) : Serializable {
 
-    override fun toString() = this.id.toString()
+    override fun toString() = id.toString()
 
-    fun asString() = this.id.toString()
+    fun asString() = id.toString()
 
     companion object {
         fun fromString(uuid: String) = PaymentId(UUID.fromString(uuid))

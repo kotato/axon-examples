@@ -17,6 +17,6 @@ open class SubtractCartItemOnCartItemSubtractedEventHandler(private val subtract
     }
 
     private fun CartItemSubtractedEvent.toCartItem() =
-            CartItem(itemId = ItemId.fromString(this.itemId),
-                     price = Money.of(this.price, this.currency))
+            CartItem(itemId = ItemId.fromString(itemId),
+                     price = Money.of(price, currency))
 }

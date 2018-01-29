@@ -22,7 +22,7 @@ open class CartViewCartItemAdder(private val repository: CartViewRepository) {
     }
 
     private fun guardCartViewExists(id: CartId, cart: CartView?) {
-        if (null == cart) throw CartViewNotFoundException(id.asString())
+        cart ?: throw CartViewNotFoundException(id.asString())
     }
 
 }

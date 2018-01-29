@@ -45,6 +45,6 @@ class CreateOrderTest : ContextStarterTest() {
     }
 
     private fun CartItemRestRequest.getCartItems() =
-            mapOf(CartItem(ItemId(this.itemId!!), Money.of(this.price!!, this.currency!!)) to Amount(this.quantity!!))
+            mapOf(CartItem(ItemId(itemId!!), Money.of(price!!, currency!!)) to Amount(quantity!!))
 
 }

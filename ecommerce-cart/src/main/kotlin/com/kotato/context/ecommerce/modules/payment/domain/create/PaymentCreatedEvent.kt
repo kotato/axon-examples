@@ -9,7 +9,7 @@ data class PaymentCreatedEvent(val aggregateId: String,
                                val price: BigDecimal,
                                val currency: String) : DomainEvent {
 
-    override fun aggregateId() = this.aggregateId
-    override fun occurredOn() = this.occurredOn
+    override fun aggregateId() = aggregateId
+    override fun occurredOn() = occurredOn
 
 }

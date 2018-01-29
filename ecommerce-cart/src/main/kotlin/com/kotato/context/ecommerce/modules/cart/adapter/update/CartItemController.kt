@@ -8,11 +8,10 @@ import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
-import javax.inject.Inject
 import javax.validation.Valid
 
 @RestController
-open class CartItemController(@Inject val commandBus: CommandBus) {
+open class CartItemController(private val commandBus: CommandBus) {
 
     @PatchMapping("/ecommerce/cart/{cartId}")
     open fun update(@PathVariable("cartId") cartId: String,

@@ -12,7 +12,8 @@ open class PaymentViewStatusAsFailedUpdater(private val repository: PaymentViewR
 
     @ReadModelTransaction
     open operator fun invoke(id: PaymentId) {
-        id.let(repository::search)
+        repository
+                .search(id)
                 .also { guardPaymentExists(id, it) }!!
                 .updateAsFailed()
                 .let(repository::save)

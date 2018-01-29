@@ -19,7 +19,7 @@ data class PaymentView(@EmbeddedId val id: PaymentId,
                        @Embedded val price: Money,
                        @Enumerated(EnumType.STRING) val status: PaymentStatus) : Serializable {
 
-    fun updateAsSucceeded() = this.copy(status = PaymentStatus.SUCCEEDED)
-    fun updateAsFailed() = this.copy(status = PaymentStatus.FAILED)
+    fun updateAsSucceeded() = copy(status = PaymentStatus.SUCCEEDED)
+    fun updateAsFailed() = copy(status = PaymentStatus.FAILED)
 
 }

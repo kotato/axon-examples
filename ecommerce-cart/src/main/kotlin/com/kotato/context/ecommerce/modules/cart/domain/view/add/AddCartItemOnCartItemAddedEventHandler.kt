@@ -17,6 +17,6 @@ open class AddCartItemOnCartItemAddedEventHandler(private val adder: CartViewCar
     }
 
     private fun CartItemAddedEvent.toCartItem() =
-            CartItem(itemId = ItemId.fromString(this.itemId),
-                     price = Money.of(this.price, this.currency))
+            CartItem(itemId = ItemId.fromString(itemId),
+                     price = Money.of(price, currency))
 }

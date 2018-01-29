@@ -2,7 +2,6 @@ package com.kotato.context.ecommerce.modules.cart.domain.view.subtract
 
 import com.kotato.context.ecommerce.modules.cart.domain.CartId
 import com.kotato.context.ecommerce.modules.cart.domain.CartItem
-import com.kotato.context.ecommerce.modules.cart.domain.add
 import com.kotato.context.ecommerce.modules.cart.domain.subtract
 import com.kotato.context.ecommerce.modules.cart.domain.view.CartView
 import com.kotato.context.ecommerce.modules.cart.domain.view.CartViewNotFoundException
@@ -23,7 +22,7 @@ open class CartViewCartItemSubtractor(private val repository: CartViewRepository
     }
 
     private fun guardCartViewExists(id: CartId, cart: CartView?) {
-        if (null == cart) throw CartViewNotFoundException(id.asString())
+        cart ?: throw CartViewNotFoundException(id.asString())
     }
 
 }
