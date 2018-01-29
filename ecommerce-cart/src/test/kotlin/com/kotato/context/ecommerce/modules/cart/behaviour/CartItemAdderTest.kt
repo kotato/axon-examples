@@ -1,7 +1,7 @@
 package com.kotato.context.ecommerce.modules.cart.behaviour
 
 import com.kotato.context.ecommerce.modules.cart.domain.Cart
-import com.kotato.context.ecommerce.modules.cart.domain.CartDoesNotExistsException
+import com.kotato.context.ecommerce.modules.cart.domain.CartNotFoundException
 import com.kotato.context.ecommerce.modules.cart.domain.add.AddCartItemCommandHandler
 import com.kotato.context.ecommerce.modules.cart.domain.add.CartItemAddedEvent
 import com.kotato.context.ecommerce.modules.cart.domain.add.CartItemAdder
@@ -99,6 +99,6 @@ class CartItemAdderTest {
     fun `it should throw exception when trying to add a cart item`() {
         fixture.givenNoPriorActivity()
                 .`when`(AddCartItemCommandStub.random())
-                .expectException(CartDoesNotExistsException::class.java)
+                .expectException(CartNotFoundException::class.java)
     }
 }
