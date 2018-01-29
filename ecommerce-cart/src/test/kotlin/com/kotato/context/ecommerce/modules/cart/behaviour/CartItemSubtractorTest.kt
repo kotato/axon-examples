@@ -1,7 +1,7 @@
 package com.kotato.context.ecommerce.modules.cart.behaviour
 
 import com.kotato.context.ecommerce.modules.cart.domain.Cart
-import com.kotato.context.ecommerce.modules.cart.domain.CartDoesNotExistsException
+import com.kotato.context.ecommerce.modules.cart.domain.CartNotFoundException
 import com.kotato.context.ecommerce.modules.cart.domain.subtract.CartItemSubtractedEvent
 import com.kotato.context.ecommerce.modules.cart.domain.subtract.CartItemSubtractor
 import com.kotato.context.ecommerce.modules.cart.domain.subtract.SubtractCartItemCommand
@@ -112,7 +112,7 @@ class CartItemSubtractorTest {
         CartCreatedEventStub.random().let {
             fixture.given()
                     .`when`(SubtractCartItemCommandStub.random(id = it.aggregateId()))
-                    .expectException(CartDoesNotExistsException::class.java)
+                    .expectException(CartNotFoundException::class.java)
         }
 
     }
@@ -121,6 +121,6 @@ class CartItemSubtractorTest {
     fun `it should throw exception when trying to subtract a cart item`() {
         fixture.givenNoPriorActivity()
                 .`when`(SubtractCartItemCommandStub.random())
-                .expectException(CartDoesNotExistsException::class.java)
+                .expectException(CartNotFoundException::class.java)
     }
 }

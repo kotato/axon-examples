@@ -17,4 +17,9 @@ import javax.persistence.Enumerated
 data class PaymentView(@EmbeddedId val id: PaymentId,
                        val createdOn: ZonedDateTime,
                        @Embedded val price: Money,
-                       @Enumerated(EnumType.STRING) val status: PaymentStatus) : Serializable
+                       @Enumerated(EnumType.STRING) val status: PaymentStatus) : Serializable {
+
+    fun updateAsSucceeded() = this.copy(status = PaymentStatus.SUCCEEDED)
+    fun updateAsFailed() = this.copy(status = PaymentStatus.FAILED)
+
+}

@@ -1,6 +1,8 @@
 package com.kotato.context.ecommerce.modules.payment.domain
 
 import com.kotato.context.ecommerce.modules.payment.domain.create.PaymentCreatedEvent
+import com.kotato.context.ecommerce.modules.payment.domain.update.status.failed.PaymentFailedEvent
+import com.kotato.context.ecommerce.modules.payment.domain.update.status.succeeded.PaymentSucceededEvent
 import com.kotato.shared.money.Money
 import org.axonframework.commandhandling.model.AggregateIdentifier
 import org.axonframework.commandhandling.model.AggregateLifecycle.apply
@@ -24,6 +26,26 @@ class Payment {
         paymentId = PaymentId.fromString(event.aggregateId)
         price = Money.of(event.price, event.currency)
         status = PaymentStatus.PENDING
+    }
+
+    @EventSourcingHandler
+    fun on(event: PaymentSucceededEvent) {
+        status = PaymentStatus.SUCCEEDED
+    }
+
+    @EventSourcingHandler
+    fun on(event: PaymentFailedEvent) {
+        status = PaymentStatus.FAILED
+    }
+
+    fun updateAsSucceeded() {
+        apply(PaymentSucceededEvent(paymentId.asString(),
+                                    ZonedDateTime.now()))
+    }
+
+    fun updateAsFailed() {
+        apply(PaymentFailedEvent(paymentId.asString(),
+                                 ZonedDateTime.now()))
     }
 
     companion object {

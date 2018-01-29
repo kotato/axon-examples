@@ -1,7 +1,7 @@
 package com.kotato.context.ecommerce.modules.cart.behaviour
 
 import com.kotato.context.ecommerce.modules.cart.domain.Cart
-import com.kotato.context.ecommerce.modules.cart.domain.CartDoesNotExistsException
+import com.kotato.context.ecommerce.modules.cart.domain.CartNotFoundException
 import com.kotato.context.ecommerce.modules.cart.domain.checkout.CartAlreadyCheckoutException
 import com.kotato.context.ecommerce.modules.cart.domain.checkout.CartCheckedOutEvent
 import com.kotato.context.ecommerce.modules.cart.domain.checkout.CartCheckout
@@ -54,7 +54,7 @@ class CartCheckoutTest {
         val command = CheckoutCartCommandStub.random()
         fixture.givenNoPriorActivity()
                 .`when`(command)
-                .expectException(CartDoesNotExistsException::class.java)
+                .expectException(CartNotFoundException::class.java)
     }
 
     @Test
