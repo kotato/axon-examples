@@ -59,7 +59,6 @@ dependencies {
 	compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.2"
 	compile "com.fasterxml.jackson.module:jackson-module-kotlin:2.9.2"
 	compile "com.github.kotato:KAxon-CQRS:0.0.10"
-	compile "com.github.kotato:assertSimilar:0.0.1"
 	compile "javax.inject:javax.inject:1"
 	compile "mysql:mysql-connector-java:6.0.6"
 	compile "org.axonframework:axon-spring-boot-starter:$axonVersion"
@@ -72,6 +71,7 @@ dependencies {
 	compile "org.springframework.boot:spring-boot-starter-web"
 
 	testCompile "com.github.javafaker:javafaker:0.12"
+	testCompile "com.github.kotato:assertSimilar:0.0.1"
 	testCompile "com.github.sbrannen:spring-test-junit5:1.0.0"
 	testCompile "com.nhaarman:mockito-kotlin-kt1.1:1.5.0"
 	testCompile "io.rest-assured:json-schema-validator:3.0.3"

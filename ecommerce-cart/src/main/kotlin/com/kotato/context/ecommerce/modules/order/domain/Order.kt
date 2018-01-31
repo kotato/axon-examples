@@ -5,11 +5,13 @@ import com.kotato.context.ecommerce.modules.cart.domain.CartItems
 import com.kotato.context.ecommerce.modules.cart.domain.toCartItems
 import com.kotato.context.ecommerce.modules.cart.domain.toSerializedCartItems
 import com.kotato.context.ecommerce.modules.order.domain.create.OrderCreatedEvent
+import com.kotato.context.ecommerce.modules.order.domain.update.status.failed.OrderFailedEvent
+import com.kotato.context.ecommerce.modules.order.domain.update.status.succeeded.OrderSucceededEvent
 import com.kotato.context.ecommerce.modules.payment.domain.PaymentId
 import com.kotato.context.ecommerce.modules.user.domain.UserId
 import org.axonframework.commandhandling.model.AggregateIdentifier
 import org.axonframework.commandhandling.model.AggregateLifecycle.apply
-import org.axonframework.eventhandling.EventHandler
+import org.axonframework.eventsourcing.EventSourcingHandler
 import org.axonframework.spring.stereotype.Aggregate
 import java.time.ZonedDateTime
 
@@ -30,7 +32,7 @@ class Order {
     lateinit var orderStatus: OrderStatus
         private set
 
-    @EventHandler
+    @EventSourcingHandler
     fun on(event: OrderCreatedEvent) {
         orderId = OrderId.fromString(event.aggregateId)
         cartId = CartId.fromString(event.cartId)
@@ -38,6 +40,24 @@ class Order {
         userId = UserId.fromString(event.userId)
         cartItems = event.cartItems.toCartItems()
         orderStatus = OrderStatus.IN_PROGRESS
+    }
+
+    @EventSourcingHandler
+    fun on(event: OrderFailedEvent) {
+        orderStatus = OrderStatus.SUCCEEDED
+    }
+
+    @EventSourcingHandler
+    fun on(event: OrderSucceededEvent) {
+        orderStatus = OrderStatus.FAILED
+    }
+
+    fun updateAsFailed() {
+        apply(OrderFailedEvent(orderId.asString(), ZonedDateTime.now()))
+    }
+
+    fun updateAsSucceeded() {
+        apply(OrderSucceededEvent(orderId.asString(), ZonedDateTime.now()))
     }
 
     companion object {

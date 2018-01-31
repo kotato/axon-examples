@@ -4,6 +4,6 @@ enum class OrderStatus {
 
     IN_PROGRESS,
     FAILED,
-    COMPLETED
+    SUCCEEDED
 
 }

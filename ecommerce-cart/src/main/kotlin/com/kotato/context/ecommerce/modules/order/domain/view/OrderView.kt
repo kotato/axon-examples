@@ -30,4 +30,9 @@ data class OrderView(@EmbeddedId val id: OrderId,
                      @ElementCollection(fetch = FetchType.EAGER)
                      @AttributeOverride(name = "key.itemId.id",
                                         column = Column(columnDefinition = "binary(16)"))
-                     val cartItems: CartItems) : Serializable
+                     val cartItems: CartItems) : Serializable {
+
+    fun updateAsFailed() = copy(status = OrderStatus.FAILED)
+    fun updateAsSucceeded() = copy(status = OrderStatus.SUCCEEDED)
+
+}
