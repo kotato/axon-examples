@@ -11,6 +11,8 @@ import com.kotato.context.ecommerce.modules.payment.domain.PaymentId
 import com.kotato.context.ecommerce.modules.payment.stub.PaymentIdStub
 import com.kotato.context.ecommerce.modules.user.domain.UserId
 import com.kotato.context.ecommerce.modules.user.stub.UserIdStub
+import com.kotato.shared.money.Money
+import com.kotato.shared.stub.MoneyStub
 import java.time.ZonedDateTime
 
 class OrderViewStub {
@@ -20,8 +22,9 @@ class OrderViewStub {
                    userId: UserId = UserIdStub.random(),
                    cartId: CartId = CartIdStub.random(),
                    paymentId: PaymentId = PaymentIdStub.random(),
+                   price: Money = MoneyStub.random(),
                    status: OrderStatus = OrderStatusStub.random(),
                    cartItems: CartItems = CartItemsStub.random())
-                = OrderView(id, occurredOn, userId, cartId, paymentId, status, cartItems)
+                = OrderView(id, occurredOn, userId, cartId, paymentId, price, status, cartItems)
     }
 }

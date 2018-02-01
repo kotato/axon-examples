@@ -23,7 +23,6 @@ class CreateOrderTest : ContextStarterTest() {
 
     @Test
     fun `it should create an order`() {
-
         val cartId = CartIdStub.random()
         val createCart = CreateCartRestRequestStub.random(cartId.id)
         val addItem = AddCartItemRestRequestStub.random()
@@ -40,6 +39,7 @@ class CreateOrderTest : ContextStarterTest() {
                     assertSimilar(it.userId, UserId(createCart.userId!!))
                     assertSimilar(it.createdOn, ZonedDateTime.now())
                     assertSimilar(it.cartItems, addItem.getCartItems())
+                    assertSimilar(it.price, Money.of(addItem.price!!, addItem.currency!!) * Amount(addItem.quantity!!))
                 }
 
     }

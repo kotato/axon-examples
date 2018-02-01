@@ -31,4 +31,13 @@ open class OrderViewRepositoryTest : ContextStarterTest() {
         assertSimilar(view, repository.searchByCartId(view.cartId))
     }
 
+    @Test
+    open fun `it should search order view by paymentId`() {
+        val view = OrderViewStub.random()
+
+        wrapper.wrap { repository.save(view) }
+
+        assertSimilar(view, repository.searchByPaymentId(view.paymentId))
+    }
+
 }

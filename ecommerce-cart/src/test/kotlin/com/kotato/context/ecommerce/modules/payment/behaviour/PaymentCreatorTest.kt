@@ -25,7 +25,8 @@ class PaymentCreatorTest {
     fun `it should create a payment`() {
         val givenItems = CartItemsStub.random()
         val price = givenItems.entries.map { it.key.price * it.value }.reduce(Money::plus)
-        val event = OrderCreatedEventStub.random(cartItems = givenItems.toSerializedCartItems())
+        val event = OrderCreatedEventStub.random(price = price.amount,
+                                                 currency = price.currency)
         val expected = PaymentCreatedEventStub.random(aggregateId = event.paymentId,
                                                        price = price.amount,
                                                        currency = price.currency)

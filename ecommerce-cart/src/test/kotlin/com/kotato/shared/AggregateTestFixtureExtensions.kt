@@ -44,6 +44,10 @@ fun ResultValidator.getPublishedEvents(): List<DomainEvent> {
     return (property.getter.call(this as ResultValidatorImpl) as List<EventMessage<*>>).map { it.payload as DomainEvent }.toList()
 }
 
+fun TestExecutor.whenLambda(lambda: () -> Unit): ResultValidator {
+    return this.whenLambda(lambda, null)
+}
+
 fun TestExecutor.whenLambda(lambda: () -> Unit, expectedException: KClass<out Throwable>? = null): ResultValidator {
 
     val uow = getUnitOfWork()

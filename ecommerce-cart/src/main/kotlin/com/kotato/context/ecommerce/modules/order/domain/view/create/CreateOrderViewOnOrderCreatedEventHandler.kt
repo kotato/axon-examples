@@ -6,6 +6,7 @@ import com.kotato.context.ecommerce.modules.order.domain.OrderId
 import com.kotato.context.ecommerce.modules.order.domain.create.OrderCreatedEvent
 import com.kotato.context.ecommerce.modules.payment.domain.PaymentId
 import com.kotato.context.ecommerce.modules.user.domain.UserId
+import com.kotato.shared.money.Money
 import org.axonframework.eventhandling.EventHandler
 import javax.inject.Named
 
@@ -19,6 +20,6 @@ open class CreateOrderViewOnOrderCreatedEventHandler(private val creator: OrderV
                 CartId.fromString(event.cartId),
                 PaymentId.fromString(event.paymentId),
                 UserId.fromString(event.userId),
-                event.cartItems.toCartItems())
+                Money.of(event.price, event.currency))
     }
 }
