@@ -1,7 +1,7 @@
 package com.kotato.context.ecommerce.modules.order.domain.create
 
-import com.kotato.context.ecommerce.modules.cart.domain.SerializedCartItems
 import com.kotato.shared.domainevent.DomainEvent
+import java.math.BigDecimal
 import java.time.ZonedDateTime
 
 
@@ -10,7 +10,8 @@ data class OrderCreatedEvent(val aggregateId: String,
                              val cartId: String,
                              val paymentId: String,
                              val userId: String,
-                             val cartItems: SerializedCartItems) : DomainEvent {
+                             val price: BigDecimal,
+                             val currency: String) : DomainEvent {
 
     override fun aggregateId() = this.aggregateId
     override fun occurredOn() = this.occurredOn

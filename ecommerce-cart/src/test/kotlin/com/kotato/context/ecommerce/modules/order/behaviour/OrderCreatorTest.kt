@@ -1,6 +1,8 @@
 package com.kotato.context.ecommerce.modules.order.behaviour
 
 import com.kotato.assertSimilar.MatcherSimilar.assertSimilar
+import com.kotato.context.ecommerce.modules.cart.domain.calculatePrice
+import com.kotato.context.ecommerce.modules.cart.domain.toCartItems
 import com.kotato.context.ecommerce.modules.cart.domain.view.CartResponse
 import com.kotato.context.ecommerce.modules.cart.domain.view.find.FindCartQuery
 import com.kotato.context.ecommerce.modules.cart.domain.view.find.FindCartQueryAsker
@@ -34,11 +36,13 @@ class OrderCreatorTest {
     @Test
     fun `it should create an order`() {
         val event = CartCheckedOutEventStub.random()
+        val response = CartResponseStub.random(cartId = event.aggregateId)
+        val price = response.cartItems.toCartItems().calculatePrice()
         val expected = OrderCreatedEventStub.random(aggregateId = event.orderId,
-                                                    cartId = event.aggregateId)
-        val response = CartResponseStub.random(cartId = expected.cartId,
-                                               cartItems = expected.cartItems,
-                                               userId = expected.userId)
+                                                    cartId = event.aggregateId,
+                                                    userId = response.userId,
+                                                    price = price.amount,
+                                                    currency = price.currency)
 
         shouldFindCart(event.aggregateId, response)
 
@@ -51,7 +55,8 @@ class OrderCreatorTest {
                     val actual = it.first() as OrderCreatedEvent
                     assertSimilar(actual.aggregateId(), expected.aggregateId)
                     assertSimilar(actual.cartId, expected.cartId)
-                    assertSimilar(actual.cartItems, expected.cartItems)
+                    assertSimilar(actual.price, expected.price)
+                    assertSimilar(actual.currency, expected.currency)
                 }
     }
 

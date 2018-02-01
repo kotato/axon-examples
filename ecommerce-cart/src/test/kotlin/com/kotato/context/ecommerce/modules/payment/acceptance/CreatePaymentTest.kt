@@ -47,8 +47,4 @@ class CreatePaymentTest : ContextStarterTest() {
 
 
     }
-
-    private fun CartItemRestRequest.getCartItems() =
-            mapOf(CartItem(ItemId(this.itemId!!), Money.of(this.price!!, this.currency!!)) to Amount(this.quantity!!))
-
 }

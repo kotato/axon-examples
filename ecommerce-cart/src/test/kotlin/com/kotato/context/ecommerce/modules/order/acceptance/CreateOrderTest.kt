@@ -39,6 +39,7 @@ class CreateOrderTest : ContextStarterTest() {
                     assertSimilar(it.userId, UserId(createCart.userId!!))
                     assertSimilar(it.createdOn, ZonedDateTime.now())
                     assertSimilar(it.cartItems, addItem.getCartItems())
+                    assertSimilar(it.price, Money.of(addItem.price!!, addItem.currency!!) * Amount(addItem.quantity!!))
                 }
 
     }

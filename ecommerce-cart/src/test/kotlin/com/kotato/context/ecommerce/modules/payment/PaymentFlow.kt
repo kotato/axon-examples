@@ -23,6 +23,6 @@ class PaymentFlow(private val objectMapper: ObjectMapper) {
                 .`when`()
                 .post("/ecommerce/payment/${id.asString()}/succeeded")
                 .then()
-                .statusCode(HttpStatus.CREATED.value())
+                .statusCode(HttpStatus.NO_CONTENT.value())
     }
 }
