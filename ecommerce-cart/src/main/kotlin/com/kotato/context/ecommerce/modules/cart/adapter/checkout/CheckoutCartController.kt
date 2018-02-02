@@ -8,10 +8,9 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RestController
 import java.net.URI
 import java.util.UUID
-import javax.inject.Inject
 
 @RestController
-open class CheckoutCartController(@Inject private val commandBus: CommandBus) {
+open class CheckoutCartController(private val commandBus: CommandBus) {
 
     @PostMapping("/ecommerce/cart/{cartId}/checkout")
     open fun checkout(@PathVariable("cartId") cartId: String): ResponseEntity<Unit> {

@@ -1,7 +1,6 @@
 package com.kotato.context.ecommerce.modules.cart.acceptance
 
 import com.kotato.assertSimilar.MatcherSimilar.assertSimilar
-import com.kotato.context.ecommerce.modules.cart.adapter.create.CreateCartRestRequest
 import com.kotato.context.ecommerce.modules.cart.adapter.update.CartItemRestRequest
 import com.kotato.context.ecommerce.modules.cart.domain.Amount
 import com.kotato.context.ecommerce.modules.cart.domain.CartId
@@ -13,7 +12,7 @@ import com.kotato.context.ecommerce.modules.cart.stub.CreateCartRestRequestStub
 import com.kotato.context.ecommerce.modules.cart.stub.SubtractCartItemRestRequestStub
 import com.kotato.context.ecommerce.modules.item.domain.ItemId
 import com.kotato.shared.ContextStarterTest
-import com.kotato.shared.TransactionalWrapper
+import com.kotato.shared.ReadModelTransactionWrapper
 import com.kotato.shared.money.Money
 import io.restassured.RestAssured
 import org.junit.jupiter.api.Test
@@ -24,7 +23,7 @@ import kotlin.test.assertTrue
 
 class SubtractCartItemControllerTest : ContextStarterTest() {
 
-    @Inject private lateinit var wrapper: TransactionalWrapper
+    @Inject private lateinit var readModelTransaction: ReadModelTransactionWrapper
     @Inject private lateinit var repository: CartViewRepository
 
     @Test
@@ -39,7 +38,7 @@ class SubtractCartItemControllerTest : ContextStarterTest() {
                 .statusCode(HttpStatus.NO_CONTENT.value())
         patch(subItem, CartId(cartId))
                 .statusCode(HttpStatus.NO_CONTENT.value())
-        wrapper.wrap { CartId.fromString(cartId.toString()).let(repository::search) }
+        readModelTransaction { CartId.fromString(cartId.toString()).let(repository::search) }
                 .let {
                     assertNotNull(it)
                     assertTrue { it!!.cartItems.size == 1 }
@@ -61,7 +60,7 @@ class SubtractCartItemControllerTest : ContextStarterTest() {
                 .statusCode(HttpStatus.NO_CONTENT.value())
         patch(subItem, CartId(cartId))
                 .statusCode(HttpStatus.NO_CONTENT.value())
-        wrapper.wrap { CartId.fromString(cartId.toString()).let(repository::search) }
+        readModelTransaction.invoke { CartId.fromString(cartId.toString()).let(repository::search) }
                 .let {
                     assertNotNull(it)
                     assertTrue { it!!.cartItems.isEmpty() }
@@ -80,7 +79,7 @@ class SubtractCartItemControllerTest : ContextStarterTest() {
                 .statusCode(HttpStatus.NO_CONTENT.value())
         patch(subItem, CartId(cartId))
                 .statusCode(HttpStatus.NO_CONTENT.value())
-        wrapper.wrap { CartId.fromString(cartId.toString()).let(repository::search) }
+        readModelTransaction.invoke { CartId.fromString(cartId.toString()).let(repository::search) }
                 .let {
                     assertNotNull(it)
                     assertTrue { it!!.cartItems.isEmpty() }
