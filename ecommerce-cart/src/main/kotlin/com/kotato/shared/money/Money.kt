@@ -1,6 +1,5 @@
 package com.kotato.shared.money
 
-import com.kotato.context.ecommerce.modules.cart.domain.Amount
 import com.kotato.shared.valueobject.ValueObject
 import java.math.BigDecimal
 
@@ -14,6 +13,5 @@ data class Money private constructor(var amount: BigDecimal, var currency: Strin
     }
 
     operator fun plus(other: Money) = Money.of(amount + other.amount, currency)
-    operator fun times(value: Amount) = Money.of(amount * BigDecimal(value.amount), currency)
 
 }
