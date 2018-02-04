@@ -16,8 +16,8 @@ open class SubtractCartItemCommandHandler(private val subtractor: CartItemSubtra
     }
 
     private fun SubtractCartItemCommand.toCartItem() =
-            CartItem(itemId = ItemId.fromString(this.itemId),
-                     price = Money.of(this.price, this.currency))
+            CartItem(itemId = ItemId.fromString(itemId),
+                     price = Money.of(price, currency))
 
 
 }

@@ -9,11 +9,11 @@ import javax.persistence.Column
 data class ItemId(@Column(columnDefinition = "binary(16)") var id: UUID) : Serializable {
 
     override fun toString(): String {
-        return this.id.toString()
+        return id.toString()
     }
 
     fun asString(): String {
-        return this.id.toString()
+        return id.toString()
     }
 
     companion object {

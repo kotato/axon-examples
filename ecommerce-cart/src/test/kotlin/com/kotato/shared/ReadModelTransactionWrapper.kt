@@ -4,9 +4,9 @@ import com.kotato.shared.transaction.ReadModelTransaction
 import javax.inject.Named
 
 @Named
-open class TransactionalWrapper {
+open class ReadModelTransactionWrapper {
 
     @ReadModelTransaction
-    open fun <T> wrap(lambda: () -> T) = lambda()
+    open operator fun <T> invoke(lambda: () -> T) = lambda()
 
 }

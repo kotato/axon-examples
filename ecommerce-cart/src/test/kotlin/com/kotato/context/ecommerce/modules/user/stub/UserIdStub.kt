@@ -5,8 +5,6 @@ import java.util.UUID
 
 class UserIdStub {
     companion object {
-        fun random(): UserId {
-            return UserId(UUID.randomUUID())
-        }
+        fun random() = UserId(UUID.randomUUID())
     }
 }

@@ -7,11 +7,10 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 import java.net.URI
-import javax.inject.Inject
 import javax.validation.Valid
 
 @RestController
-open class CreateCartController(@Inject val commandBus: CommandBus) {
+open class CreateCartController(private val commandBus: CommandBus) {
 
     @PostMapping("/ecommerce/cart")
     open fun create(@RequestBody @Valid request: CreateCartRestRequest): ResponseEntity<Unit> {

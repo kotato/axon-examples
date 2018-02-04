@@ -13,7 +13,7 @@ data class Money private constructor(var amount: BigDecimal, var currency: Strin
         fun eur(amount: BigDecimal) = Money.of(amount, "EUR")
     }
 
-    operator fun plus(other: Money) = Money.of(this.amount + other.amount, this.currency)
-    operator fun times(value: Amount) = Money.of(this.amount * BigDecimal(value.amount), this.currency)
+    operator fun plus(other: Money) = Money.of(amount + other.amount, currency)
+    operator fun times(value: Amount) = Money.of(amount * BigDecimal(value.amount), currency)
 
 }

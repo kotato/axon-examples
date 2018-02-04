@@ -7,7 +7,7 @@ import com.kotato.context.ecommerce.modules.cart.domain.view.CartViewRepository
 import com.kotato.context.ecommerce.modules.cart.stub.CreateCartRestRequestStub
 import com.kotato.context.ecommerce.modules.user.domain.UserId
 import com.kotato.shared.ContextStarterTest
-import com.kotato.shared.TransactionalWrapper
+import com.kotato.shared.ReadModelTransactionWrapper
 import io.restassured.RestAssured
 import org.junit.jupiter.api.Test
 import org.springframework.http.HttpStatus
@@ -17,7 +17,7 @@ import kotlin.test.assertNotNull
 
 class CreateCartControllerTest : ContextStarterTest() {
 
-    @Inject private lateinit var wrapper: TransactionalWrapper
+    @Inject private lateinit var readModelTransaction: ReadModelTransactionWrapper
     @Inject private lateinit var repository: CartViewRepository
 
     @Test
@@ -31,7 +31,7 @@ class CreateCartControllerTest : ContextStarterTest() {
                 .then()
                 .statusCode(HttpStatus.CREATED.value())
 
-        wrapper.wrap { repository.search(CartId.fromString(restRequest.id!!.toString())) }
+        readModelTransaction { repository.search(CartId.fromString(restRequest.id!!.toString())) }
                 .let {
                     assertNotNull(it)
                     assertSimilar(it, CartView(id = CartId.fromString(restRequest.id!!.toString()),

@@ -1,8 +1,6 @@
 package com.kotato.context.ecommerce.modules.cart.acceptance
 
 import com.kotato.assertSimilar.MatcherSimilar.assertSimilar
-import com.kotato.context.ecommerce.modules.cart.adapter.create.CreateCartRestRequest
-import com.kotato.context.ecommerce.modules.cart.adapter.update.CartItemRestRequest
 import com.kotato.context.ecommerce.modules.cart.domain.Amount
 import com.kotato.context.ecommerce.modules.cart.domain.CartId
 import com.kotato.context.ecommerce.modules.cart.domain.CartItem
@@ -14,7 +12,7 @@ import com.kotato.context.ecommerce.modules.cart.stub.CreateCartRestRequestStub
 import com.kotato.context.ecommerce.modules.item.domain.ItemId
 import com.kotato.context.ecommerce.modules.user.domain.UserId
 import com.kotato.shared.ContextStarterTest
-import com.kotato.shared.TransactionalWrapper
+import com.kotato.shared.ReadModelTransactionWrapper
 import com.kotato.shared.money.Money
 import io.restassured.RestAssured
 import org.junit.jupiter.api.Test
@@ -25,7 +23,7 @@ import kotlin.test.assertNotNull
 
 class AddCartItemControllerTest : ContextStarterTest() {
 
-    @Inject private lateinit var wrapper: TransactionalWrapper
+    @Inject private lateinit var readModelTransaction: ReadModelTransactionWrapper
     @Inject private lateinit var repository: CartViewRepository
 
     @Test
@@ -37,7 +35,7 @@ class AddCartItemControllerTest : ContextStarterTest() {
         val restRequest = AddCartItemRestRequestStub.random()
         cartFlow.addItem(restRequest, cartId)
 
-        wrapper.wrap { repository.search(cartId) }
+        readModelTransaction { repository.search(cartId) }
                 .let {
                     assertNotNull(it)
                     val cartItem = CartItem(ItemId.fromString(restRequest.itemId!!.toString()),
@@ -59,7 +57,7 @@ class AddCartItemControllerTest : ContextStarterTest() {
         val restRequest = AddCartItemRestRequestStub.random()
         (0..1).forEach { cartFlow.addItem(restRequest, cartId) }
 
-        wrapper.wrap { repository.search(cartId) }
+        readModelTransaction.invoke { repository.search(cartId) }
                 .let {
                     assertNotNull(it)
                     val cartItem = CartItem(ItemId.fromString(restRequest.itemId!!.toString()),
@@ -84,7 +82,7 @@ class AddCartItemControllerTest : ContextStarterTest() {
         val restRequest2 = AddCartItemRestRequestStub.random()
         cartFlow.addItem(restRequest2, cartId)
 
-        wrapper.wrap { repository.search(cartId) }
+        readModelTransaction.invoke { repository.search(cartId) }
                 .let {
                     assertNotNull(it)
                     val cartItem = CartItem(ItemId.fromString(restRequest.itemId!!.toString()),

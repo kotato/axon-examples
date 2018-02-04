@@ -10,8 +10,7 @@ import javax.inject.Named
 open class CartFinder(private val repository: CartViewRepository) {
 
     operator fun invoke(id: CartId) =
-            id.let(repository::search)
-                    .also { guardCartExists(id, it) }!!
+            repository.search(id).also { guardCartExists(id, it) }!!
 
     private fun guardCartExists(id: CartId, entity: CartView?) {
         entity ?: throw CartViewNotFoundException(id.asString())

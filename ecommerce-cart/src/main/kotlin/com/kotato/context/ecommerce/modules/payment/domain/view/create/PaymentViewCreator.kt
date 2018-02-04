@@ -14,7 +14,7 @@ open class PaymentViewCreator(private val repository: PaymentViewRepository) {
 
     @ReadModelTransaction
     open operator fun invoke(id: PaymentId, createdOn: ZonedDateTime, price: Money) {
-        PaymentView(id, createdOn, price, PaymentStatus.PENDING).let(repository::save)
+        repository.save(PaymentView(id, createdOn, price, PaymentStatus.PENDING))
     }
 
 }
