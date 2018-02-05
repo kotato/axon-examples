@@ -1,7 +1,9 @@
 package com.kotato.context.ecommerce.modules.order.behaviour
 
+import com.kotato.assertSimilar.MatcherSimilar.assertSimilar
 import com.kotato.context.ecommerce.modules.order.domain.Order
 import com.kotato.context.ecommerce.modules.order.domain.OrderNotFoundException
+import com.kotato.context.ecommerce.modules.order.domain.OrderStatus
 import com.kotato.context.ecommerce.modules.order.domain.update.status.failed.OrderStatusAsFailedByPaymentIdUpdater
 import com.kotato.context.ecommerce.modules.order.domain.update.status.failed.UpdateOrderStatusOnPaymentFailedEventHandler
 import com.kotato.context.ecommerce.modules.order.domain.view.OrderResponse
@@ -17,12 +19,14 @@ import com.kotato.cqrs.domain.query.QueryBus
 import com.kotato.cqrs.domain.query.ask
 import com.kotato.shared.MockitoHelper.Companion.mockObject
 import com.kotato.shared.expectDomainEvent
+import com.kotato.shared.loadAggregate
 import com.kotato.shared.whenLambda
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.doThrow
 import com.nhaarman.mockito_kotlin.whenever
 import org.axonframework.test.aggregate.AggregateTestFixture
 import org.junit.jupiter.api.Test
+import kotlin.test.assertFalse
 
 class OrderStatusAsFailedByPaymentIdUpdaterTest {
 
@@ -46,6 +50,8 @@ class OrderStatusAsFailedByPaymentIdUpdaterTest {
                 .whenLambda { handler.on(event) }
                 .expectSuccessfulHandlerExecution()
                 .expectDomainEvent(expected)
+
+        assertSimilar(fixture.loadAggregate(givenEvent.aggregateId).orderStatus, OrderStatus.FAILED)
     }
 
     @Test

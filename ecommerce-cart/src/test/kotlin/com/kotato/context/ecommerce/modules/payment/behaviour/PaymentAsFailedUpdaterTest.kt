@@ -1,7 +1,10 @@
 package com.kotato.context.ecommerce.modules.payment.behaviour
 
+import com.kotato.assertSimilar.MatcherSimilar.assertSimilar
+import com.kotato.context.ecommerce.modules.order.domain.OrderStatus
 import com.kotato.context.ecommerce.modules.payment.domain.Payment
 import com.kotato.context.ecommerce.modules.payment.domain.PaymentNotFound
+import com.kotato.context.ecommerce.modules.payment.domain.PaymentStatus
 import com.kotato.context.ecommerce.modules.payment.domain.update.status.failed.PaymentAsFailedUpdater
 import com.kotato.context.ecommerce.modules.payment.domain.update.status.failed.PaymentFailedEvent
 import com.kotato.context.ecommerce.modules.payment.domain.update.status.failed.UpdatePaymentAsFailedCommand
@@ -10,6 +13,7 @@ import com.kotato.context.ecommerce.modules.payment.infrastructure.AxonPaymentRe
 import com.kotato.context.ecommerce.modules.payment.stub.PaymentCreatedEventStub
 import com.kotato.context.ecommerce.modules.payment.stub.UpdatePaymentAsFailedCommandStub
 import com.kotato.shared.expectDomainEvent
+import com.kotato.shared.loadAggregate
 import org.axonframework.test.aggregate.AggregateTestFixture
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -39,6 +43,7 @@ class PaymentAsFailedUpdaterTest {
                 .expectSuccessfulHandlerExecution()
                 .expectDomainEvent(expected)
 
+        assertSimilar(fixture.loadAggregate(givenEvent.aggregateId).status, PaymentStatus.FAILED)
     }
 
     @Test

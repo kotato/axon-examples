@@ -1,6 +1,7 @@
 package com.kotato.context.ecommerce.modules.order.behaviour
 
 import com.kotato.assertSimilar.MatcherSimilar.assertSimilar
+import com.kotato.context.ecommerce.modules.cart.domain.CartId
 import com.kotato.context.ecommerce.modules.cart.domain.calculatePrice
 import com.kotato.context.ecommerce.modules.cart.domain.toCartItems
 import com.kotato.context.ecommerce.modules.cart.domain.view.CartResponse
@@ -9,20 +10,27 @@ import com.kotato.context.ecommerce.modules.cart.domain.view.find.FindCartQueryA
 import com.kotato.context.ecommerce.modules.cart.stub.CartCheckedOutEventStub
 import com.kotato.context.ecommerce.modules.cart.stub.CartResponseStub
 import com.kotato.context.ecommerce.modules.order.domain.Order
+import com.kotato.context.ecommerce.modules.order.domain.OrderId
+import com.kotato.context.ecommerce.modules.order.domain.OrderStatus
 import com.kotato.context.ecommerce.modules.order.domain.create.CreateOrderOnCartCheckedOutEventHandler
 import com.kotato.context.ecommerce.modules.order.domain.create.OrderCreatedEvent
 import com.kotato.context.ecommerce.modules.order.domain.create.OrderCreator
 import com.kotato.context.ecommerce.modules.order.infrastructure.AxonOrderRepository
 import com.kotato.context.ecommerce.modules.order.stub.OrderCreatedEventStub
+import com.kotato.context.ecommerce.modules.payment.domain.PaymentId
+import com.kotato.context.ecommerce.modules.user.domain.UserId
 import com.kotato.cqrs.domain.query.QueryBus
 import com.kotato.cqrs.domain.query.ask
 import com.kotato.shared.getPublishedEvents
+import com.kotato.shared.loadAggregate
 import com.kotato.shared.whenLambda
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
 import org.axonframework.test.aggregate.AggregateTestFixture
 import org.junit.jupiter.api.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
 class OrderCreatorTest {
@@ -58,6 +66,15 @@ class OrderCreatorTest {
                     assertSimilar(actual.price, expected.price)
                     assertSimilar(actual.currency, expected.currency)
                 }
+
+        fixture.loadAggregate(event.orderId).let {
+            assertSimilar(it.orderId, OrderId.fromString(event.orderId))
+            assertSimilar(it.cartId, CartId.fromString(event.aggregateId))
+            assertSimilar(it.orderStatus, OrderStatus.IN_PROGRESS)
+            assertSimilar(it.price, price)
+            assertSimilar(it.userId, UserId.fromString(expected.userId))
+            assertNotNull(it.paymentId)
+        }
     }
 
     private fun shouldFindCart(id: String,
