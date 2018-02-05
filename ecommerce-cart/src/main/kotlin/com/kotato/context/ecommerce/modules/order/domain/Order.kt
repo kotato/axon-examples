@@ -44,12 +44,12 @@ class Order {
 
     @EventSourcingHandler
     fun on(event: OrderFailedEvent) {
-        orderStatus = OrderStatus.SUCCEEDED
+        orderStatus = OrderStatus.FAILED
     }
 
     @EventSourcingHandler
     fun on(event: OrderSucceededEvent) {
-        orderStatus = OrderStatus.FAILED
+        orderStatus = OrderStatus.SUCCEEDED
     }
 
     fun updateAsFailed() {

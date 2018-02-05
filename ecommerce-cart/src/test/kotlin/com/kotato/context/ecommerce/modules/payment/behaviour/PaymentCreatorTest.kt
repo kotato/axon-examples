@@ -1,14 +1,18 @@
 package com.kotato.context.ecommerce.modules.payment.behaviour
 
+import com.kotato.assertSimilar.MatcherSimilar.assertSimilar
 import com.kotato.context.ecommerce.modules.cart.domain.toSerializedCartItems
 import com.kotato.context.ecommerce.modules.cart.stub.CartItemsStub
 import com.kotato.context.ecommerce.modules.order.stub.OrderCreatedEventStub
 import com.kotato.context.ecommerce.modules.payment.domain.Payment
+import com.kotato.context.ecommerce.modules.payment.domain.PaymentId
+import com.kotato.context.ecommerce.modules.payment.domain.PaymentStatus
 import com.kotato.context.ecommerce.modules.payment.domain.create.CreatePaymentOnOrderCreatedEventHandler
 import com.kotato.context.ecommerce.modules.payment.domain.create.PaymentCreator
 import com.kotato.context.ecommerce.modules.payment.infrastructure.AxonPaymentRepository
 import com.kotato.context.ecommerce.modules.payment.stub.PaymentCreatedEventStub
 import com.kotato.shared.expectDomainEvent
+import com.kotato.shared.loadAggregate
 import com.kotato.shared.money.Money
 import com.kotato.shared.whenLambda
 import org.axonframework.test.aggregate.AggregateTestFixture
@@ -35,6 +39,12 @@ class PaymentCreatorTest {
                 .whenLambda({ handler.on(event) })
                 .expectSuccessfulHandlerExecution()
                 .expectDomainEvent(expected)
+
+        fixture.loadAggregate(event.paymentId).let {
+            assertSimilar(it.paymentId, PaymentId.fromString(event.paymentId))
+            assertSimilar(it.price, price)
+            assertSimilar(it.status, PaymentStatus.PENDING)
+        }
     }
 
 }

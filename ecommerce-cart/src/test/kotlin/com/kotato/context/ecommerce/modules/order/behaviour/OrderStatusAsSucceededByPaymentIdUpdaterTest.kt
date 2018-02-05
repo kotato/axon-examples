@@ -1,9 +1,9 @@
 package com.kotato.context.ecommerce.modules.order.behaviour
 
+import com.kotato.assertSimilar.MatcherSimilar.assertSimilar
 import com.kotato.context.ecommerce.modules.order.domain.Order
 import com.kotato.context.ecommerce.modules.order.domain.OrderNotFoundException
-import com.kotato.context.ecommerce.modules.order.domain.update.status.failed.OrderStatusAsFailedByPaymentIdUpdater
-import com.kotato.context.ecommerce.modules.order.domain.update.status.failed.UpdateOrderStatusOnPaymentFailedEventHandler
+import com.kotato.context.ecommerce.modules.order.domain.OrderStatus
 import com.kotato.context.ecommerce.modules.order.domain.update.status.succeeded.OrderStatusAsSucceededByPaymentIdUpdater
 import com.kotato.context.ecommerce.modules.order.domain.update.status.succeeded.UpdateOrderStatusOnPaymentSucceededEventHandler
 import com.kotato.context.ecommerce.modules.order.domain.view.OrderResponse
@@ -12,15 +12,14 @@ import com.kotato.context.ecommerce.modules.order.domain.view.find.by_payment_id
 import com.kotato.context.ecommerce.modules.order.domain.view.find.by_payment_id.FindOrderByPaymentIdQueryAsker
 import com.kotato.context.ecommerce.modules.order.infrastructure.AxonOrderRepository
 import com.kotato.context.ecommerce.modules.order.stub.OrderCreatedEventStub
-import com.kotato.context.ecommerce.modules.order.stub.OrderFailedEventStub
 import com.kotato.context.ecommerce.modules.order.stub.OrderResponseStub
 import com.kotato.context.ecommerce.modules.order.stub.OrderSucceededEventStub
-import com.kotato.context.ecommerce.modules.payment.stub.PaymentFailedEventStub
 import com.kotato.context.ecommerce.modules.payment.stub.PaymentSucceededEventStub
 import com.kotato.cqrs.domain.query.QueryBus
 import com.kotato.cqrs.domain.query.ask
 import com.kotato.shared.MockitoHelper.Companion.mockObject
 import com.kotato.shared.expectDomainEvent
+import com.kotato.shared.loadAggregate
 import com.kotato.shared.whenLambda
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.doThrow
@@ -50,6 +49,8 @@ class OrderStatusAsSucceededByPaymentIdUpdaterTest {
                 .whenLambda { handler.on(event) }
                 .expectSuccessfulHandlerExecution()
                 .expectDomainEvent(expected)
+
+        assertSimilar(fixture.loadAggregate(givenEvent.aggregateId).orderStatus, OrderStatus.SUCCEEDED)
     }
 
     @Test
