@@ -14,7 +14,6 @@ open class CreateOrderOnCartCheckedOutEventHandler(private val creator: OrderCre
     @EventHandler
     open fun on(event: CartCheckedOutEvent) {
         creator(OrderId.fromString(event.orderId),
-                CartId.fromString(event.aggregateId),
-                PaymentId(UUID.randomUUID()))
+                CartId.fromString(event.aggregateId))
     }
 }

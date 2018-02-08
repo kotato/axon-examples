@@ -25,7 +25,7 @@ class CqrsCommandBusTest {
     }
 
     @Test
-    fun `it should fail because command handle does not exist`() {
+    fun `it should fail because command handler does not exist`() {
         assertFailsWith(NoHandlerForCommandException::class) {
             commandBus.handle(TestWithoutHandlerCommand())
         }

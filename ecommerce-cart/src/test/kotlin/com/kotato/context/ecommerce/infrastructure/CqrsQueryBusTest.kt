@@ -27,7 +27,7 @@ class CqrsQueryBusTest {
     }
 
     @Test
-    fun `it should fail because query handle does not exist`() {
+    fun `it should fail because query handler does not exist`() {
         assertFailsWith(NoHandlerForQueryException::class) {
             queryBus.ask(TestWithoutHandlerQuery())
         }
