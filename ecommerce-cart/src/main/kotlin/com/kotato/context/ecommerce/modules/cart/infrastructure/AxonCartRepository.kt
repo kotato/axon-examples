@@ -2,7 +2,7 @@ package com.kotato.context.ecommerce.modules.cart.infrastructure
 
 import com.kotato.context.ecommerce.modules.cart.domain.Cart
 import com.kotato.context.ecommerce.modules.cart.domain.CartId
-import com.kotato.context.ecommerce.modules.cart.domain.create.CartRepository
+import com.kotato.context.ecommerce.modules.cart.domain.CartRepository
 import com.kotato.context.ecommerce.modules.user.domain.UserId
 import org.axonframework.commandhandling.model.AggregateNotFoundException
 import org.springframework.stereotype.Repository

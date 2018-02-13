@@ -1,4 +1,4 @@
-package com.kotato.context.ecommerce.modules.cart.domain.create
+package com.kotato.context.ecommerce.modules.cart.domain
 
 import com.kotato.context.ecommerce.modules.cart.domain.Cart
 import com.kotato.context.ecommerce.modules.cart.domain.CartId
