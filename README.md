@@ -1,4 +1,5 @@
 # Axon examples
+CI: ![](https://travis-ci.org/kotato/axon-examples.svg?branch=master)
 
 ## Starting the project locally
 In order to start this project locally, you must run mysql first. 
