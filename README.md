@@ -2,7 +2,7 @@
 
 ## Starting the project locally
 In order to start this project locally, you must run mysql first. 
-You can choose how you can do it (install it locally and then run it or just run a mysql docker).
+You can choose how you want do it (install it locally and then run it or just run a mysql docker).
 Once this is done, then you'll have to create databases manually:
 
 ```
