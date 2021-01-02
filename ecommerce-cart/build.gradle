@@ -12,7 +12,7 @@ buildscript {
 		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}"
 		classpath "org.jetbrains.kotlin:kotlin-noarg:${kotlinVersion}"
 		classpath "org.junit.platform:junit-platform-gradle-plugin:1.0.1"
-		classpath "mysql:mysql-connector-java:6.0.6"
+		classpath "mysql:mysql-connector-java:8.0.11"
 	}
 }
 
