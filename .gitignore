@@ -26,3 +26,7 @@ hs_err_pid*
 
 #Exclude iml files
 *.iml
+
+/build/
+/.gradle/
+/.idea/
